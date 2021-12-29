@@ -1,0 +1,24 @@
+# Session
+Midnight.json
+session.json
+session*.json
+
+# Modules
+node_modules/
+
+# Lock files
+*-lock.json
+*.lock
+
+# Testing file
+tes.js
+tes*.*
+temp/*.png
+temp/*.jpg
+temp/*.webp
+
+# Still in development
+commands/general/stikmeme.js
+
+# Database
+databases/group/*.json
