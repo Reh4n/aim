@@ -11,7 +11,7 @@
   "author": "FaizBastomi",
   "license": "MIT",
   "dependencies": {
-    "@adiwajshing/baileys": "github:adiwajshing/Baileys",
+    "@adiwajshing/baileys": "^3.5.3",
     "@discordjs/collection": "^0.3.2",
     "axios": "^0.24.0",
     "chalk": "^4.1.2",
