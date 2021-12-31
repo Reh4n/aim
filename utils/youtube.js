@@ -1,5 +1,5 @@
 const ytsr = require('ytsr')
-const ytdl = require("ytdl-core")
+//const ytdl = require("ytdl-core")
 const { default: axios } = require("axios")
 const { UserAgent } = require("./index")
 /*
