@@ -9,26 +9,25 @@ module.exports = {
 	use: '[options] url\n\n- *Options* -\n\n1. anime\n2. manga\n\nEx: !mynimeku anime url',
 	async execute(msg, wa, args) {
 		try {
-			const { from } = msg
 			let data
 			switch (args[0].toLowerCase()) {
 				case 'anime':
 					data = await downloadNimek(args[1])
-					await wa.mediaURL(from, data, { quoted: msg })
+					await wa.mediaURL(msg.from, data, { quoted: msg })
 				break
 				case 'manga': case 'komik':
 					let { title, result } = await downloadKomik(args[1])
 					let { data: thumbnail } = await axios.get(result[0], { responseType: 'arraybuffer' })
 					data = await toPDF(result)
-					await ev.sendMessage(from, { url: data }, 'documentMessage', { quoted: msg, filename: `${title}.pdf`, thumbnail })
+					await ev.sendMessage(msg.from, { url: data }, 'documentMessage', { quoted: msg, filename: `${title}.pdf`, thumbnail })
 				break
 				default: 
 					data = await downloadNimek(args[0])
-					await wa.mediaURL(from, data, { quoted: msg })
+					await wa.mediaURL(msg.from, data, { quoted: msg })
 			}
 		} catch (e) {
 			console.log(e)
-			wa.reply(from, String(e), msg)
+			wa.reply(msg.from, String(e), msg)
 		}
 	}
 }
