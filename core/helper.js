@@ -228,7 +228,7 @@ exports.sticker = function (jid, data, options = {}) {
 exports.sendButtons = async function (jid, text, buttons = [], options = {}) {
   const struct = {
     contentText: text,
-    footerText: 'Kaguya PublicBot ⬩ Made By FaizBastomi',
+    footerText: 'Nyarlathotep-Bot ⬩ Made By XÆ15 - T',
     headerType: 'EMPTY',
     buttons: [...buttons],
   };
