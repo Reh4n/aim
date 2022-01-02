@@ -11,6 +11,7 @@ module.exports = {
 	async execute(msg, wa, args) {
 		try {
 			const { from } = msg
+			if (!args[0]) return wa.reply(from, 'URL needed', msg)
 			let data
 			switch (args[0].toLowerCase()) {
 				case 'anime':
@@ -25,10 +26,9 @@ module.exports = {
 					let { data: thumbnail } = await axios.get(result[0], { responseType: 'arraybuffer' })
 					console.log(title, result)
 					data = await toPDF(result)
-					await ev.sendMessage(from, data, 'documentMessage', { quoted: msg, filename: `${title}.pdf`, thumbnail })
+					await ev.sendMessage(from, data, 'documentMessage', { quoted: msg, filename: `${title}.pdf`, mimetype: 'application/pdf', thumbnail })
 				break
 				default:
-					if (!args[0]) return wa.reply(from, 'URL needed', msg)
 					data = await downloadNimek(args[0])
 					console.log(data)
 					await ev.sendMessage(from, { url: data }, 'videoMessage', { quoted: msg })
