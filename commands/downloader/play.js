@@ -17,7 +17,7 @@ module.exports = {
         const struct = {
             locationMessage: { jpegThumbnail: b.toString("base64") },
             contentText: `📙 Title: ${s[0].title}\n📎 Url: ${s[0].url}\n🚀 Upload: ${s[0].uploadedAt}\n\nWant a video version? click button below, or you don\'t see it? type *!ytv youtube_url*\n\nAudio on progress....`,
-            footerText: 'Kaguya PublicBot ⬩ Made by FaizBastomi',
+            footerText: 'Nyarlathotep-Bot ⬩ Made by XÆ15 - T',
             headerType: 6,
             buttons: [
                 { buttonText: { displayText: 'Video' }, buttonId: `#ytv ${s[0].url} SMH`, type: 1 }
