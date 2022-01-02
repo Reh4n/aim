@@ -1,7 +1,7 @@
 const clc = require('chalk');
 const fetch = require('node-fetch');
 const { default: axios } = require("axios");
-
+const pdfkit = require('pdfkit');
 const fs = require('fs');
 const moment = require('moment-timezone');
 const { fromBuffer } = require('file-type');
@@ -167,6 +167,23 @@ const openWeatherAPI = async function (q, type) {
   }
 }
 
+const toPDF = (images) => {
+	return new Promise(async (resolve, reject) => {
+		if (!Array.isArray(images)) images = [images]
+		let buffs = []
+		let doc = new pdfkit({ margin: 0, size: [595.28, 841.89] })
+		for (let img of images) {
+			let { data } = await axios.get(img, { responseType: 'arraybuffer' })
+			doc.image(data, 0, 0, { fit: [595.28, 841.89], align: 'center', valign: 'center' })
+			doc.addPage()
+		}
+		doc.on('data', (chunk) => buffs.push(chunk))
+		doc.on('end', () => resolve(Buffer.concat(buffs)))
+		doc.on('error', (e) => reject(e))
+		doc.end()
+	})
+}
+
 module.exports = {
   color,
   getRandom,
@@ -177,5 +194,6 @@ module.exports = {
   textParse,
   fixNumber,
   UserAgent,
-  openWeatherAPI
+  openWeatherAPI,
+  toPDF
 };
