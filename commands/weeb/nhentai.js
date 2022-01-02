@@ -9,8 +9,9 @@ module.exports = {
 	use: '[options] quey\n\n- *Options* -\n\n1. pdf\n2. search\n3. latest\n\nEx: !nhentai pdf 212121',
 	async execute(msg, wa, args) {
 		try {
-			const { from, body } = msg
-			switch (args[0].toLowerCase()) {
+			const { from } = msg
+			let type = (args[0] || '').toLowerCase()
+			switch (type) {
 				case 'latest': {
 					let res = await getLatest()
 					let thumbnail = await fetchBuffer(res[0].thumbnail)
