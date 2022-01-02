@@ -21,9 +21,9 @@ module.exports = {
 				case 'search': {
 					if (!args[1]) return wa.reply(from, 'Input query', msg)
 					await wa.reply(from, 'Loading...', msg)
-					let res = await search(args.splice(1))
+					let res = await search(args.splice(1).join(' '))
 					let thumbnail = await fetchBuffer(res[0].thumbnail)
-					await wa.custom(from, res.map((v, i) => `${i + 1}. ${v.title}\nLang: ${v.language}\nID: ${v.id}`).join('\n\n'), 'extendedTextMessage', { quoted: msg, contextInfo: { externalAdReply: { title: res[0].title, body: `~> Query: ${args.splice(1)}`, thumbnail, sourceUrl: 'https://hiken.xyz/v/' + res[0].id }}})
+					await wa.custom(from, res.map((v, i) => `${i + 1}. ${v.title}\nLang: ${v.language}\nID: ${v.id}`).join('\n\n'), 'extendedTextMessage', { quoted: msg, contextInfo: { externalAdReply: { title: res[0].title, body: `~> Query: ${args.splice(1).join(' ')}`, thumbnail, sourceUrl: 'https://hiken.xyz/v/' + res[0].id }}})
 					break
 				}
 				case 'pdf': {
