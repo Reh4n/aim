@@ -1,21 +1,6 @@
 const ytsr = require('ytsr')
-//const ytdl = require("ytdl-core")
 const { default: axios } = require("axios")
 const { UserAgent } = require("./index")
-/*
-const { ytCookie } = require('../config.json')
-
-function formatBytes(bytes, decimals = 2) {
-    if (bytes === 0) return '0 Bytes';
-
-    const k = 1024;
-    const dm = decimals < 0 ? 0 : decimals;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
-} */
 
 const search = async function (query, type) {
     if (!type) {
@@ -47,7 +32,7 @@ const yta = async function (url) {
             url,
             data: new URLSearchParams(Object.entries(formdata)),
             headers: {
-                "USer-Agent": ua,
+                "User-Agent": ua,
                 "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
             }
         })
@@ -76,23 +61,23 @@ const ytv = async function (url) {
             url,
             data: new URLSearchParams(Object.entries(formdata)),
             headers: {
-                "USer-Agent": ua,
+                "User-Agent": ua,
                 "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
             }
         })
     }
     const res = await post({ q: url, vt: "mp4" }, "https://yt1s.com/api/ajaxSearch/index", UA)
     if (res.data.status !== "ok") throw Error("Error Occurs when posting data to yt1s server.\n", res.data)
-    const res2 = await post({ vid: res.data.vid, k: res.data.links.mp4["18"].k }, "https://yt1s.com/api/ajaxConvert/convert", UA)
+    const res2 = await post({ vid: res.data.vid, k: res.data.links.mp4["22"].k || res.data.links.mp4["18"].k }, "https://yt1s.com/api/ajaxConvert/convert", UA)
     if (res2.data.status !== "ok") throw Error("Error occurs when posting 'convert' data to yt1s server.\n", res.data)
 
     let title = res.data.title,
-        filesizeF = res.data.links.mp4["18"].size,
+        filesizeF = res.data.links.mp4["22"].size || res.data.links.mp4["18"].size,
         filesize = parseFloat(filesizeF) * (1000 * /MB$/.test(filesizeF)),
         id = res.data.vid,
         thumb = `https://i.ytimg.com/vi/${id}/0.jpg`,
         dl_link = res2.data.dlink,
-        q = res.data.links.mp4["18"].q
+        q = res.data.links.mp4["22"].q || res.data.links.mp4["18"].q
 
     return { title, filesize, filesizeF, id, thumb, dl_link, q }
 }
