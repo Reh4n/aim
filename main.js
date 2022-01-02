@@ -46,7 +46,7 @@ function printLog(isCmd, sender, groupName, isGroup) {
 }
 
 /* Cron */
-cron(ev);
+// cron(ev);
 
 ev.on('CB:action,,battery', (b) => {
 	ev['battery']['value'] = parseInt(b[2][0][1].value)
