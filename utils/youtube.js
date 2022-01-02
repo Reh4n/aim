@@ -68,16 +68,16 @@ const ytv = async function (url) {
     }
     const res = await post({ q: url, vt: "mp4" }, "https://yt1s.com/api/ajaxSearch/index", UA)
     if (res.data.status !== "ok") throw Error("Error Occurs when posting data to yt1s server.\n", res.data)
-    const res2 = await post({ vid: res.data.vid, k: res.data.links.mp4["22"].k || res.data.links.mp4["18"].k }, "https://yt1s.com/api/ajaxConvert/convert", UA)
+    const res2 = await post({ vid: res.data.vid, k: res.data.links.mp4["22"] ? res.data.links.mp4["22"].k : res.data.links.mp4["18"].k }, "https://yt1s.com/api/ajaxConvert/convert", UA)
     if (res2.data.status !== "ok") throw Error("Error occurs when posting 'convert' data to yt1s server.\n", res.data)
 
     let title = res.data.title,
-        filesizeF = res.data.links.mp4["22"].size || res.data.links.mp4["18"].size,
+        filesizeF = res.data.links.mp4["22"] ? res.data.links.mp4["22"].size : res.data.links.mp4["18"].size,
         filesize = parseFloat(filesizeF) * (1000 * /MB$/.test(filesizeF)),
         id = res.data.vid,
         thumb = `https://i.ytimg.com/vi/${id}/0.jpg`,
         dl_link = res2.data.dlink,
-        q = res.data.links.mp4["22"].q || res.data.links.mp4["18"].q
+        q = res.data.links.mp4["22"] ? res.data.links.mp4["22"].q : res.data.links.mp4["18"].q
 
     return { title, filesize, filesizeF, id, thumb, dl_link, q }
 }
