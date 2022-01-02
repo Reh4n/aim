@@ -15,22 +15,22 @@ module.exports = {
 			switch (args[0].toLowerCase()) {
 				case 'anime':
 					if (!args[1]) return wa.reply(from, 'URL needed', msg)
-					let { title, thumb, url } = await downloadNimek(args[1])
-					let { data: thumbnail } = await axios.get(thumb, { responseType: 'arraybuffer' })
+					var { title, thumb, url } = await downloadNimek(args[1])
+					var { data: thumbnail } = await axios.get(thumb, { responseType: 'arraybuffer' })
 					await wa.reply(from, 'Loading...', msg)
 					await ev.sendMessage(from, { url }, 'documentMessage', { quoted: msg, filename: `${title}.mp4`, mimetype: 'video/mp4', thumbnail })
 				break
 				case 'manga': case 'komik':
 					if (!args[1]) return wa.reply(from, 'URL needed', msg)
-					let { title, result } = await downloadKomik(args[1])
-					let { data: thumbnail } = await axios.get(result[0], { responseType: 'arraybuffer' })
+					var { title, result } = await downloadKomik(args[1])
+					var { data: thumbnail } = await axios.get(result[0], { responseType: 'arraybuffer' })
 					await wa.reply(from, 'Loading...', msg)
 					data = await toPDF(result)
 					await ev.sendMessage(from, data, 'documentMessage', { quoted: msg, filename: `${title}.pdf`, mimetype: 'application/pdf', thumbnail })
 				break
 				default:
-					let { title, thumb, url } = await downloadNimek(args[0])
-					let { data: thumbnail } = await axios.get(thumb, { responseType: 'arraybuffer' })
+					var { title, thumb, url } = await downloadNimek(args[0])
+					var { data: thumbnail } = await axios.get(thumb, { responseType: 'arraybuffer' })
 					await wa.reply(from, 'Loading...', msg)
 					await ev.sendMessage(from, { url }, 'documentMessage', { quoted: msg, filename: `${title}.mp4`, mimetype: 'video/mp4', thumbnail })
 			}
