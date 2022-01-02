@@ -13,17 +13,20 @@ module.exports = {
 			switch (args[0].toLowerCase()) {
 				case 'anime':
 					data = await downloadNimek(args[1])
-					await wa.mediaURL(msg.from, data, { quoted: msg })
+					console.log(data)
+					await ev.sendMessage(msg.from, { url: data }, 'videoMessage', { quoted: msg })
 				break
 				case 'manga': case 'komik':
 					let { title, result } = await downloadKomik(args[1])
 					let { data: thumbnail } = await axios.get(result[0], { responseType: 'arraybuffer' })
+					console.log(title, result)
 					data = await toPDF(result)
-					await ev.sendMessage(msg.from, { url: data }, 'documentMessage', { quoted: msg, filename: `${title}.pdf`, thumbnail })
+					await ev.sendMessage(msg.from, data, 'documentMessage', { quoted: msg, filename: `${title}.pdf`, thumbnail })
 				break
 				default: 
 					data = await downloadNimek(args[0])
-					await wa.mediaURL(msg.from, data, { quoted: msg })
+					console.log(data)
+					await ev.sendMessage(msg.from, { url: data }, 'videoMessage', { quoted: msg })
 			}
 		} catch (e) {
 			console.log(e)
