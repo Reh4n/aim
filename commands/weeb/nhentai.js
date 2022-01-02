@@ -15,22 +15,22 @@ module.exports = {
 				case 'latest': {
 					let res = await getLatest()
 					let thumbnail = await fetchBuffer(res[0].thumbnail)
-					await wa.custom(from, res.map((v, i) => `${i + 1}. ${v.title}\nLang: ${v.language}\nID: ${v.id}`).join('\n\n'), 'extendedTextMessage', { quoted: msg, contextInfo: { externalAdReply: { title: res[0].title, body: 'Nhentai Latest', thumbnail, sourceUrl: 'https://hiken.xyz/v/' + res[0].id }}})
+					await wa.custom(from, res.map((v, i) => `${i + 1}. ${v.title}\nLanguage: ${v.language}\nLink: https://hiken.xyz/v/${v.id}`).join('\n\n'), 'extendedTextMessage', { quoted: msg, contextInfo: { externalAdReply: { title: res[0].title, body: 'Nhentai Latest', thumbnail, sourceUrl: 'https://hiken.xyz/v/' + res[0].id }}})
 					break
 				}
 				case 'search': {
 					if (!args[1]) return wa.reply(from, 'Input query', msg)
 					await wa.reply(from, 'Loading...', msg)
 					let res = await search(args.splice(1).join(' '))
+					console.log(args.splice(1).join(' '))
 					let thumbnail = await fetchBuffer(res[0].thumbnail)
-					await wa.custom(from, res.map((v, i) => `${i + 1}. ${v.title}\nLang: ${v.language}\nID: ${v.id}`).join('\n\n'), 'extendedTextMessage', { quoted: msg, contextInfo: { externalAdReply: { title: res[0].title, body: `~> Query: ${args.splice(1).join(' ')}`, thumbnail, sourceUrl: 'https://hiken.xyz/v/' + res[0].id }}})
+					await wa.custom(from, res.map((v, i) => `${i + 1}. ${v.title}\nLanguage: ${v.language}\nLink: https://hiken.xyz/v/${v.id}`).join('\n\n'), 'extendedTextMessage', { quoted: msg, contextInfo: { externalAdReply: { title: res[0].title, body: 'Nhentai Search', thumbnail, sourceUrl: 'https://hiken.xyz/v/' + res[0].id }}})
 					break
 				}
 				case 'pdf': {
 					if (!args[1]) return wa.reply(from, 'Input code', msg)
-					if (isNaN(args[1])) return wa.reply(from, 'Code must be number', msg)
 					await wa.reply(from, 'Loading...', msg)
-					let { title, cover, pages } = await getDoujin(args[1])
+					let { title, cover, pages } = await getDoujin(args[1].replace(/\D/g, ''))
 					pages = await toPDF(pages)
 					let thumbnail = await fetchBuffer(cover)
 					await wa.custom(from, pages, 'documentMessage', { quoted: msg, filename: `${title.default}.pdf`, mimetype: 'application/pdf', thumbnail })
@@ -48,7 +48,7 @@ module.exports = {
 					await wa.reply(from, 'Loading...', msg)
 					let res = await getPopular()
 					let thumbnail = await fetchBuffer(res[0].thumbnail)
-					await wa.custom(from, res.map((v, i) => `${i + 1}. ${v.title}\nLang: ${v.language}\nID: ${v.id}`).join('\n\n'), 'extendedTextMessage', { quoted: msg, contextInfo: { externalAdReply: { title: res[0].title, body: 'Nhentai Popular', thumbnail, sourceUrl: 'https://hiken.xyz/v/' + res[0].id }}})
+					await wa.custom(from, res.map((v, i) => `${i + 1}. ${v.title}\nLanguage: ${v.language}\nLink: https://hiken.xyz/v/${v.id}`).join('\n\n'), 'extendedTextMessage', { quoted: msg, contextInfo: { externalAdReply: { title: res[0].title, body: 'Nhentai Popular', thumbnail, sourceUrl: 'https://hiken.xyz/v/' + res[0].id }}})
 			}
 		} catch (e) {
 			console.log(e)
