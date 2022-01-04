@@ -1,4 +1,3 @@
-const ev = require('../../core/connect').Whatsapp
 const { fetchBuffer, toPDF } = require('../../utils')
 const { search, getDoujin } = require('nhentai-node-api')
 
@@ -10,7 +9,7 @@ module.exports = {
 	async execute(msg, wa, args) {
 		try {
 			const { from, quoted } = msg
-			if (quoted && quoted.key.fromMe && quoted.key.id.startsWith('3EB0')) {
+			if (quoted && quoted.key.fromMe && quoted.key.id.startsWith('3EB0') && quoted.key.id.endsWith('NHENTAI')) {
 				if (!args[0]) return wa.reply(from, 'Input code', msg)
 				if (isNaN(args[0])) return wa.reply(from, 'Code must be number', msg)
 				await wa.reply(from, 'Loading...', msg)
