@@ -31,7 +31,7 @@ module.exports = {
 
 function getLink(url) {
 	return new Promise((resolve, reject) => {
-		if (!/https?:\/\//.test(url)) return reject('Invalid url!')
+		// if (!/https?:\/\//.test(url)) return reject('Invalid url!')
 		axios.get(url).then(({ data }) => {
 			let $ = cheerio.load(data)
 			let result = Array.from($('div.epsright > span.eps').get().map(v => $(v).find('a').attr('href')))
