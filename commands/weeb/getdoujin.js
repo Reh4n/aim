@@ -17,8 +17,11 @@ module.exports = {
 				if (isNaN(args[0])) return wa.reply(from, 'Code must be number', msg)
 				await wa.reply(from, 'Loading...', msg)
 				let quotedText = quoted.message.conversation || quoted.message.extendedTextMessage.text
-				let res = await getLink(quotedText.split('\n\n')[args[0] - 1].split('Link: ')[1])
-				let { title, images } = await download(res[0])
+				let input = quotedText.split('\n\n')[args[0] - 1].split('Link: ')[1]
+				let res
+				if (input.includes('chapter')) res = input
+				else res = await getLink(input)
+				let { title, images } = await download(res)
 				let buffer = await toPDF(images)
 				let thumbnail = await compressImage(images[0])
 				await wa.custom(from, buffer, 'documentMessage', { quoted: msg, filename: `${title}.pdf`, mimetype: 'application/pdf', thumbnail })
@@ -31,18 +34,17 @@ module.exports = {
 
 function getLink(url) {
 	return new Promise((resolve, reject) => {
-		// if (!/https?:\/\//.test(url)) return reject('Invalid url!')
 		axios.get(url).then(({ data }) => {
 			let $ = cheerio.load(data)
 			let result = Array.from($('div.epsright > span.eps').get().map(v => $(v).find('a').attr('href')))
-			resolve(result)
+			// resolve(result)
+			resolve(result[0])
 		}).catch(reject)
 	})
 }
 
 function download(url) {
 	return new Promise((resolve, reject) => {
-		// if (!/https?:\/\//.test(url)) return reject('Invalid url!')
 		axios.get(url).then(({ data }) => {
 			let $ = cheerio.load(data)
 			let title = $('div.lm').find('h1').text()
