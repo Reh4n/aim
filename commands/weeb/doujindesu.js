@@ -39,10 +39,18 @@ module.exports = {
 					break
 				}
 				default:
+				if (args[0] && /https?:\/\//.test(args[0])) {
+					await wa.reply(from, 'Loading...', msg)
+					let { title, images } = await download(args[0])
+					let buffer = await toPDF(images)
+					let thumbnail = await compressImage(images[0])
+					await wa.custom(from, buffer, 'documentMessage', { quoted: msg, filename: `${title}.pdf`, mimetype: 'application/pdf', thumbnail })
+				} else {
 					await wa.reply(from, 'Loading...', msg)
 					let res = await getLatest()
 					let thumbnail = await fetchBuffer(res[0].thumb)
 					await wa.custom(from, res.map((v, i) => `${i + 1}. Title: ${v.title}\nChapter: ${v.chapter.split('. ')[1]}\nType: ${v.type}\nLink: ${v.link}`).join('\n\n'), 'extendedTextMessage', { quoted: msg, messageId: generateMessageID().slice(0, 5) + 'DOUDESU', contextInfo: { externalAdReply: { title: res[0].title, body: 'Doujindesu Latest', thumbnail, sourceUrl: res[0].link }}})
+				}
 			}
 		} catch (e) {
 			console.log(e)
