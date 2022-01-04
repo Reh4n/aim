@@ -1,14 +1,14 @@
 const axios = require('axios')
 const cheerio = require('cheerio')
 const { toPDF, fetchBuffer } = require('../../utils')
-const { Whatsapp: ev } = require('../../core/connect')
+const { generateMessageID, compressImage } = require('@adiwajshing/baileys')
 
 module.exports = {
 	name: 'doujindesu',
 	aliases: ['dd'],
 	category: 'weebs',
 	desc: 'Download/Search doujin hentai from web doujindesu.',
-	use: '[options] query|url\n\n- *Options* -\n\n1. pdf\n2. search\n\nEx: !doujindesu pdf https://doujindesu.id/2021/11/26/15-fun-no-zangyou/',
+	use: '[options] query|url\n\n- *Options* -\n\n1. pdf\n2. search\n\nEx: !doujindesu pdf https://doujindesu.xxx/2022/01/04/elf-who-likes-to-be-humiliated-chapter-07',
 	async execute(msg, wa, args) {
 		try {
 			const { from } = msg
@@ -18,15 +18,15 @@ module.exports = {
 					await wa.reply(from, 'Loading...', msg)
 					let res = await getLatest()
 					let thumbnail = await fetchBuffer(res[0].thumb)
-					await wa.custom(from, res.map((v, i) => `${i + 1}. Title: ${v.title}\nChapter: ${v.chapter.replace('Ch. ', '')}\nType: ${v.type}\nLink: ${v.link}`).join('\n\n'), 'extendedTextMessage', { quoted: msg, contextInfo: { externalAdReply: { title: res[0].title, body: 'Doujindesu Latest', thumbnail, sourceUrl: res[0].link }}})
+					await wa.custom(from, res.map((v, i) => `${i + 1}. Title: ${v.title}\nChapter: ${v.chapter.split('. ')[1]}\nType: ${v.type}\nLink: ${v.link}`).join('\n\n'), 'extendedTextMessage', { quoted: msg, messageId: generateMessageID().slice(0, 5) + 'DOUDESU', contextInfo: { externalAdReply: { title: res[0].title, body: 'Doujindesu Latest', thumbnail, sourceUrl: res[0].link }}})
 					break
 				}
 				case 'search': {
 					if (!args[1]) return wa.reply(from, 'Input query', msg)
 					await wa.reply(from, 'Loading...', msg)
-					let res = await search(args.splice(1).join(' '))
+					let res = await search(args.slice(1).join(' '))
 					let thumbnail = await fetchBuffer(res[0].thumb)
-					await wa.custom(from, res.map((v, i) => `${i + 1}. Title: ${v.title}\nScore: ${v.score}\nType: ${v.type}\nStatus: ${v.status}\nLink: ${v.link}`).join('\n\n'), 'extendedTextMessage', { quoted: msg, contextInfo: { externalAdReply: { title: res[0].title, body: 'Doujindesu Search', thumbnail, sourceUrl: res[0].link }}})
+					await wa.custom(from, res.map((v, i) => `${i + 1}. Title: ${v.title}\nScore: ${v.score}\nType: ${v.type}\nStatus: ${v.status}\nLink: ${v.link}`).join('\n\n'), 'extendedTextMessage', { quoted: msg, messageId: generateMessageID().slice(0, 5) + 'DOUDESU', contextInfo: { externalAdReply: { title: res[0].title, body: 'Doujindesu Search', thumbnail, sourceUrl: res[0].link }}})
 					break
 				}
 				case 'pdf': {
@@ -34,7 +34,7 @@ module.exports = {
 					await wa.reply(from, 'Loading...', msg)
 					let { title, images } = await download(args[1])
 					let buffer = await toPDF(images)
-					let thumbnail = await fetchBuffer(images[0])
+					let thumbnail = await compressImage(images[0])
 					await wa.custom(from, buffer, 'documentMessage', { quoted: msg, filename: `${title}.pdf`, mimetype: 'application/pdf', thumbnail })
 					break
 				}
@@ -42,7 +42,7 @@ module.exports = {
 					await wa.reply(from, 'Loading...', msg)
 					let res = await getLatest()
 					let thumbnail = await fetchBuffer(res[0].thumb)
-					await wa.custom(from, res.map((v, i) => `${i + 1}. Title: ${v.title}\nChapter: ${v.chapter.replace('Ch. ', '')}\nType: ${v.type}\nLink: ${v.link}`).join('\n\n'), 'extendedTextMessage', { quoted: msg, contextInfo: { externalAdReply: { title: res[0].title, body: 'Doujindesu Latest', thumbnail, sourceUrl: res[0].link }}})
+					await wa.custom(from, res.map((v, i) => `${i + 1}. Title: ${v.title}\nChapter: ${v.chapter.split('. ')[1]}\nType: ${v.type}\nLink: ${v.link}`).join('\n\n'), 'extendedTextMessage', { quoted: msg, messageId: generateMessageID().slice(0, 5) + 'DOUDESU', contextInfo: { externalAdReply: { title: res[0].title, body: 'Doujindesu Latest', thumbnail, sourceUrl: res[0].link }}})
 			}
 		} catch (e) {
 			console.log(e)
@@ -96,10 +96,7 @@ function download(url) {
 			let $ = cheerio.load(data)
 			let title = $('div.lm').find('h1').text()
 			let link = $('div.chright').find('a').attr('href')
-			let images = []
-			$('div.reader-area > img').each(function() {
-				images.push($(this).attr('src'))
-			})
+			let images = Array.from($('div.reader-area > img').get().map(v => $(v).attr('src')))
 			resolve({ title, link, images })
 		}).catch(reject)
 	})
