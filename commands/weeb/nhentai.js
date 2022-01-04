@@ -45,7 +45,7 @@ module.exports = {
 					break
 				}
 				default:
-				if (args[0] && typeof args[0] == 'number') {
+				if (args[0] && /^\d+$/.test(args[0])) {
 					await wa.reply(from, 'Loading...', msg)
 					let { title, cover, pages } = await getDoujin(args[0])
 					pages = await toPDF(pages)
