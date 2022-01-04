@@ -33,9 +33,9 @@ module.exports = {
 					if (!args[1]) return wa.reply(from, 'Input code', msg)
 					await wa.reply(from, 'Loading...', msg)
 					let { title, images } = await download(args[1])
-					images = await toPDF(images)
+					let buffer = await toPDF(images)
 					let thumbnail = await fetchBuffer(images[0])
-					await wa.custom(from, images, 'documentMessage', { quoted: msg, filename: `${title}.pdf`, mimetype: 'application/pdf', thumbnail })
+					await wa.custom(from, buffer, 'documentMessage', { quoted: msg, filename: `${title}.pdf`, mimetype: 'application/pdf', thumbnail })
 					break
 				}
 				default:
