@@ -35,18 +35,18 @@ readCmd();
 con.connect();
 process.on('uncaughtException', console.error);
 
-function printLog(isCmd, sender, groupName, isGroup) {
+function printLog(isCmd, body, sender, groupName, isGroup) {
 	const time = moment.tz('Asia/Jakarta').format('DD/MM/YY HH:mm:ss');
 	if (isCmd && isGroup) {
-		return console.log(color(`[${time}]`, 'yellow'), color('[EXEC]', 'aqua'), color(`${sender.split('@')[0]}`, 'lime'), 'in', color(`${groupName}`, 'lime'));
+		return console.log(color(`[${time}]`, 'yellow'), color('[EXEC]', 'aqua'), color(body, 'aqua'), color(`${sender.split('@')[0]}`, 'lime'), 'in', color(`${groupName}`, 'lime'));
 	}
 	if (isCmd && !isGroup) {
-		return console.log(color(`[${time}]`, 'yellow'), color('[EXEC]', 'aqua'), color(`${sender.split('@')[0]}`, 'lime'));
+		return console.log(color(`[${time}]`, 'yellow'), color('[EXEC]', 'aqua'), color(body, 'aqua'), color(`${sender.split('@')[0]}`, 'lime'));
 	}
 }
 
 /* Cron */
-// cron(ev);
+cron(ev);
 
 ev.on('CB:action,,battery', (b) => {
 	ev['battery']['value'] = parseInt(b[2][0][1].value)
@@ -84,7 +84,7 @@ ev.on('chat-update', async (msg) => {
 		const groupSubject = isGroup ? groupMeta.subject : '';
 
 		// Log
-		printLog(isCmd, sender, groupSubject, isGroup);
+		printLog(isCmd, body, sender, groupSubject, isGroup);
 		
 		if (/^>?> /.test(body)) {
 			let teks
