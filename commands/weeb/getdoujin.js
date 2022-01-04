@@ -19,8 +19,8 @@ module.exports = {
 				let quotedText = quoted.message.conversation || quoted.message.extendedTextMessage.text
 				let res = await getLink(quotedText.split('\n\n')[args[0] - 1].split('Link: ')[1])
 				let { title, images } = await download(res[0])
-				let buffer = await toPDF(pages)
-				let thumbnail = await compressImage(images)
+				let buffer = await toPDF(images)
+				let thumbnail = await compressImage(images[0])
 				await wa.custom(from, buffer, 'documentMessage', { quoted: msg, filename: `${title}.pdf`, mimetype: 'application/pdf', thumbnail })
 			}
 		} catch (e) {
