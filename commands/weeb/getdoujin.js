@@ -42,7 +42,7 @@ function getLink(url) {
 
 function download(url) {
 	return new Promise((resolve, reject) => {
-		if (!/https?:\/\//.test(url)) return reject('Invalid url!')
+		// if (!/https?:\/\//.test(url)) return reject('Invalid url!')
 		axios.get(url).then(({ data }) => {
 			let $ = cheerio.load(data)
 			let title = $('div.lm').find('h1').text()
