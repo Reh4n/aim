@@ -4,7 +4,7 @@ const { search, getDoujin } = require('nhentai-node-api')
 
 module.exports = {
 	name: 'getnhentai',
-	aliases: ['gethentai', 'getdoujin'],
+	aliases: ['gethentai'],
 	category: 'weebs',
 	use: 'Ex: !gethentai 1 <reply chat bot>',
 	async execute(msg, wa, args) {
