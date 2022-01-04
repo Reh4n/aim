@@ -17,7 +17,7 @@ module.exports = {
 				if (isNaN(args[0])) return wa.reply(from, 'Code must be number', msg)
 				await wa.reply(from, 'Loading...', msg)
 				let quotedText = quoted.message.conversation || quoted.message.extendedTextMessage.text
-				let res = await getLink(quotedText.split('\n\n')[input - 1].split('Link: ')[1])
+				let res = await getLink(quotedText.split('\n\n')[args[0] - 1].split('Link: ')[1])
 				let { title, images } = await download(res[0])
 				let buffer = await toPDF(pages)
 				let thumbnail = await compressImage(images)
