@@ -5,19 +5,19 @@ module.exports = joinHandler = async (data) => {
     // For Bot
     const gM = await ev.groupMetadata(data.jid);
     if (data.action === "add" && data.participants.includes(ev.user.jid)) {
-        if (gM.participants.length < 80) {
+        /*if (gM.participants.length < 80) {
             await ev.sendMessage(data.jid, "Sorry, but this group member is not more than 80 members, I leave soon.", "conversation")
             .then(async () => {
                 await ev.groupLeave(data.jid);
                 setTimeout(async () => { await ev.modifyChat(data.jid, "delete") }, 5000);
             })
-        } else {
+        } else {*/
             let ids = [];
             for (let id of gM.participants) {
                 id.isAdmin ? ids.push(id.jid) : ''
             }
             await ev.sendMessage(data.jid, "Thanks for letting me join your group :D", "conversation", { contextInfo: { mentionedJid: ids } });
-        }
+        //}
     } else if (data.action === "remove" && data.participants.includes(ev.user.jid)) {
         let info = checkData(data.jid.split('@')[0])
         if (info !== "no_file") { deleteData(data.jid.split('@')[0]) }
