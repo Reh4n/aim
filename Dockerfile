@@ -2,11 +2,12 @@ FROM node:lts-buster
 
 RUN apt-get update && \
   apt-get install -y \
-  ytdl-core \
   ffmpeg \
   imagemagick \
   webp && \
   apt-get upgrade -y && \
+  npm install -y \
+  ytdl-core && \
   rm -rf /var/lib/apt/lists/*
 
 COPY package.json .
