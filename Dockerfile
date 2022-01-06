@@ -6,13 +6,12 @@ RUN apt-get update && \
   imagemagick \
   webp && \
   apt-get upgrade -y && \
-  npm install -y \
-  ytdl-core && \
   rm -rf /var/lib/apt/lists/*
 
 COPY package.json .
 
-RUN npm install
+RUN npm install && \
+  npm install -y ytdl-core@latest
 
 COPY . .
 
