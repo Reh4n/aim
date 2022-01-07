@@ -3,7 +3,7 @@ module.exports = {
 	aliases: ['uptime'],
 	category: 'info',
 	async execute(msg, wa) {
-		wa.reply(msg.from, clockString(processs.uptime()), msg)
+		wa.reply(msg.from, clockString(process.uptime()), msg)
 	}
 }
 
