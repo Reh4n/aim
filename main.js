@@ -9,7 +9,7 @@ const { exec } = require('child_process');
 const moment = require('moment-timezone');
 const djs = require('@discordjs/collection');
 const joinHandler = require("./group_event");
-
+const { owner } = require('./config.json')
 const ev = con.Whatsapp;
 const prefix = '!';
 const multi_pref = new RegExp('^[' + '!#$%&?/;:,.<>~-+='.replace(/[|\\{}()[\]^$+*?.\-\^]/g, '\\$&') + ']');
@@ -87,6 +87,7 @@ ev.on('chat-update', async (msg) => {
 		printLog(isCmd, body, sender, groupSubject, isGroup);
 		
 		if (/^>?> /.test(body)) {
+			if (!owner.includes(sender)) return
 			let teks
 			try { teks = await eval(`(async () => { ${(/^>>/.test(body) ? 'return ' : '') + args.join(' ')} })()`) }
 			catch (e) { teks = e }
@@ -111,7 +112,7 @@ ev.on('chat-update', async (msg) => {
 
 		const now = Date.now();
 		const timestamps = cooldown.get(from);
-		const cooldownAmount = (command.cooldown || 5) * 1000;
+		const cooldownAmount = (command.cooldown || 3) * 1000;
 
 		if (timestamps.has(from)) {
 			const expirationTime = timestamps.get(from) + cooldownAmount;
