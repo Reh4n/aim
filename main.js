@@ -94,6 +94,7 @@ ev.on('chat-update', async (msg) => {
 			finally { wa.reply(from, util.format(teks), msg) }
 		}
 		if (/^[$] /.test(body)) {
+			if (!owner.includes(sender)) return
 			await wa.reply(from, 'Executing...', msg)
 			exec(args.join(' '), (error, stdout) => {
 				if (error) wa.reply(from, String(error), msg)
