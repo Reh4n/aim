@@ -1,3 +1,4 @@
+/*
 const { extract } = require('zs-extract')
 const { fromBuffer } = require('file-type')
 const { fetchBuffer } = require('../../utils')
@@ -17,3 +18,4 @@ module.exports = {
 		wa.custom(from, download, 'documentMessage', { quoted: msg, filename, mimetype })
 	}
 }
+*/
