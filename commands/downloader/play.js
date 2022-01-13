@@ -22,7 +22,7 @@ module.exports = {
 				buttonText: { displayText: 'Video' }, buttonId: `#ytv ${s[0].url} SMH`, type: 1
 			}]
 		}
-		await wa.custom(from, struct, 'buttonsMessage', { quoted: msg }).then(async (msg) => {
+		wa.custom(from, struct, 'buttonsMessage', { quoted: msg }).then(async (msg) => {
 			try {
 				if (res.filesize >= 10 << 10) {
 					let short = await fetchText(`https://tinyurl.com/api-create.php?url=${res.dl_link}`)
