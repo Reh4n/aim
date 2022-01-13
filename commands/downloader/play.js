@@ -1,6 +1,7 @@
 const yts = require('ytsr')
 const { yta } = require('../../utils/youtube')
 const { fetchBuffer, fetchText } = require('../../utils')
+const { Whatsapp: ev } = require('../core/connect')
 
 module.exports = {
 	name: 'play',
@@ -22,14 +23,14 @@ module.exports = {
 				buttonText: { displayText: 'Video' }, buttonId: `#ytv ${s[0].url} SMH`, type: 1
 			}]
 		}
-		return wa.custom(from, struct, 'buttonsMessage', { quoted: msg }).then(async (msg) => {
+		await ev.sendMessage(from, struct, 'buttonsMessage', { quoted: msg }).then(async (msg) => {
 			try {
 				if (res.filesize >= 10 << 10) {
 					let short = await fetchText(`https://tinyurl.com/api-create.php?url=${res.dl_link}`)
 					let capt = `*Title:* ${res.title}\n*ID:* ${res.id}\n*Quality:* ${res.q}\n*Size:* ${res.filesizeF}\n*Download:* ${short}\n\n_Filesize too big_`
-					wa.custom(from, { url: res.thumb }, 'imageMessage', { caption: capt, quoted: msg })
+					ev.sendMessage(from, { url: res.thumb }, 'imageMessage', { caption: capt, quoted: msg })
 				} else {
-					wa.custom(from, { url: res.dl_link }, 'audioMessage', { mimetype: 'audio/mp4', quoted: msg })
+					ev.sendMessage(from, { url: res.dl_link }, 'audioMessage', { mimetype: 'audio/mp4', quoted: msg })
 				}
 			} catch {
 				wa.reply(from, 'Something wrong when sending the audio', msg)
