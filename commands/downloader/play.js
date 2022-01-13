@@ -1,7 +1,7 @@
 const yts = require('ytsr')
 const { yta } = require('../../utils/youtube')
 const { fetchBuffer, fetchText } = require('../../utils')
-const { Whatsapp: ev } = require('../core/connect')
+const { Whatsapp: ev } = require('../../core/connect')
 
 module.exports = {
 	name: 'play',
