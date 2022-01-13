@@ -5,9 +5,7 @@ module.exports = job = (c) => {
      //   c.setMaxListeners(30)
         const getAllId = c.chats.all().filter(v => v.messages).map(v => v.jid)
         try {
-            for (let id of getAllId) {
-                id.endsWith('@g.us') ? await c.modifyChat(id, 'clear') : c.modifyChat(id, 'delete')
-            }
+            for (let id of getAllId) await c.modifyChat(id, 'clear')
         } catch (e) { }
     }, {
         timezone: "Asia/Jakarta",
