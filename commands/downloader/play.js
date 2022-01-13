@@ -22,17 +22,17 @@ module.exports = {
 				buttonText: { displayText: 'Video' }, buttonId: `#ytv ${s[0].url} SMH`, type: 1
 			}]
 		}
-		wa.custom(from, struct, 'buttonsMessage', { quoted: msg }).then(async (msg) => {
+		return wa.custom(from, struct, 'buttonsMessage', { quoted: msg }).then(async (msg) => {
 			try {
 				if (res.filesize >= 10 << 10) {
 					let short = await fetchText(`https://tinyurl.com/api-create.php?url=${res.dl_link}`)
 					let capt = `*Title:* ${res.title}\n*ID:* ${res.id}\n*Quality:* ${res.q}\n*Size:* ${res.filesizeF}\n*Download:* ${short}\n\n_Filesize too big_`
-					return await wa.custom(from, { url: res.thumb }, 'imageMessage', { caption: capt, quoted: msg })
+					wa.custom(from, { url: res.thumb }, 'imageMessage', { caption: capt, quoted: msg })
 				} else {
-					return await wa.custom(from, { url: res.dl_link }, 'audioMessage', { mimetype: 'audio/mp4', quoted: msg })
+					wa.custom(from, { url: res.dl_link }, 'audioMessage', { mimetype: 'audio/mp4', quoted: msg })
 				}
 			} catch {
-				wa.reply(from, "Something wrong when sending the audio", msg)
+				wa.reply(from, 'Something wrong when sending the audio', msg)
 			}
 		})
 	}
