@@ -27,9 +27,9 @@ module.exports = {
 				if (res.filesize >= 10 << 10) {
 					let short = await fetchText(`https://tinyurl.com/api-create.php?url=${res.dl_link}`)
 					let capt = `*Title:* ${res.title}\n*ID:* ${res.id}\n*Quality:* ${res.q}\n*Size:* ${res.filesizeF}\n*Download:* ${short}\n\n_Filesize too big_`
-					await wa.custom(from, { url: res.thumb }, 'imageMessage', { caption: capt, quoted: msg })
+					return await wa.custom(from, { url: res.thumb }, 'imageMessage', { caption: capt, quoted: msg })
 				} else {
-					await wa.custom(from, { url: res.dl_link }, 'audioMessage', { mimetype: 'audio/mp4', quoted: msg })
+					return await wa.custom(from, { url: res.dl_link }, 'audioMessage', { mimetype: 'audio/mp4', quoted: msg })
 				}
 			} catch {
 				wa.reply(from, "Something wrong when sending the audio", msg)
