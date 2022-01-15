@@ -7,20 +7,14 @@ module.exports = {
 	name: 'mediafire',
 	category: 'downloader',
 	async execute(msg, wa, args) {
-		try {
-			const { from } = msg
-			if (!args[0]) return wa.reply(from, 'Input url', msg)
-			// await wa.reply(from, 'Loading...', msg)
-			let res = await mediafireDl(args[0])
+		const { from } = msg
+		if (!args[0]) return wa.reply(from, 'Input url', msg)
+		mediafireDl(args[0]).then(async (res) => {
 			await wa.reply(from, JSON.stringify(res, null, 2), msg)
 			let buff = await fetchBuffer(res.link)
-			let { ext, mime: mimetype } = await fromBuffer(buff)
-			// let filename = `${res.title}.${ext}`
+			let { mime: mimetype } = await fromBuffer(buff)
 			await wa.custom(from, buff, 'documentMessage', { quoted: msg, filename: res.title, mimetype })
-		} catch (e) {
-			console.log(e)
-			wa.reply(msg.from, String(e), msg)
-		}
+		}).catch(wa.reply)
 	}
 }
 
