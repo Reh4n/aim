@@ -12,11 +12,11 @@ module.exports = {
 			if (!args[0]) return wa.reply(from, 'Input url', msg)
 			// await wa.reply(from, 'Loading...', msg)
 			let res = await mediafireDl(args[0])
-			await wa.reply(from, String(res), msg)
+			await wa.reply(from, JSON.stringify(res, null, 2), msg)
 			let buff = await fetchBuffer(res.link)
 			let { ext, mime: mimetype } = await fromBuffer(buff)
-			let filename = `${res.title}.${ext}`
-			await wa.custom(from, buff, 'documentMessage', { quoted: msg, filename, mimetype })
+			// let filename = `${res.title}.${ext}`
+			await wa.custom(from, buff, 'documentMessage', { quoted: msg, filename: res.title, mimetype })
 		} catch (e) {
 			console.log(e)
 			wa.reply(msg.from, String(e), msg)
