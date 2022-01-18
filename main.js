@@ -107,7 +107,7 @@ ev.on('chat-update', async (msg) => {
 
 		if (!command) return;
 
-		if (!cooldown.has(from) && !owner.includes(sender)) {
+		if (!cooldown.has(from)) {
 			cooldown.set(from, new djs.Collection());
 		}
 
