@@ -30,7 +30,6 @@
     "speed-test": "*",
     "webp-converter": "^2.3.3",
     "wikijs": "^6.3.2",
-    "ytsr": "^3.5.3",
-    "zs-extract": "*"
+    "ytsr": "^3.5.3"
   }
 }
