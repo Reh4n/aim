@@ -22,8 +22,7 @@ module.exports = {
 			switch (opt) {
 				case '--doc':
 					if (res.length > 15000000) {
-						let short = await fetchText(`https://tinyurl.com/api-create.php?url=${ytLink}`)
-						let caption = `*Title:* ${items[0].title}\n*Views:* ${items[0].views}\n*Duration:* ${items[0].duration}\n*Download:* ${short}\n\n_Filesize too big_`
+						let caption = `*Title:* ${items[0].title}\n*Views:* ${items[0].views}\n*Duration:* ${items[0].duration}\n*Download:* ${ytLink}\n\n_Filesize too big_`
 						await wa.mediaURL(from, items[0].thumbnails[0].url, { quoted: msg, caption })
 					} else {
 						await ev.sendMessage(from, res, 'documentMessage', { mimetype: 'audio/mp4', filename: items[0].title + '.mp3', quoted: msg })
@@ -31,8 +30,7 @@ module.exports = {
 					break
 				case '--ptt':
 					if (res.length > 15000000) {
-						let short = await fetchText(`https://tinyurl.com/api-create.php?url=${ytLink}`)
-						let caption = `*Title:* ${items[0].title}\n*Views:* ${items[0].views}\n*Duration:* ${items[0].duration}\n*Download:* ${short}\n\n_Filesize too big_`
+						let caption = `*Title:* ${items[0].title}\n*Views:* ${items[0].views}\n*Duration:* ${items[0].duration}\n*Download:* ${ytLink}\n\n_Filesize too big_`
 						await wa.mediaURL(from, items[0].thumbnails[0].url, { quoted: msg, caption })
 					} else {
 						await ev.sendMessage(from, res, 'audioMessage', { mimetype: 'audio/mp4', ptt: true, quoted: msg })
@@ -40,8 +38,7 @@ module.exports = {
 					break
 				default:
 					if (res.length > 15000000) {
-						let short = await fetchText(`https://tinyurl.com/api-create.php?url=${ytLink}`)
-						let caption = `*Title:* ${items[0].title}\n*Views:* ${items[0].views}\n*Duration:* ${items[0].duration}\n*Download:* ${short}\n\n_Filesize too big_`
+						let caption = `*Title:* ${items[0].title}\n*Views:* ${items[0].views}\n*Duration:* ${items[0].duration}\n*Download:* ${ytLink}\n\n_Filesize too big_`
 						await wa.mediaURL(from, items[0].thumbnails[0].url, { quoted: msg, caption })
 					} else {
 						await ev.sendMessage(from, res, 'audioMessage', { mimetype: 'audio/mp4', quoted: msg })
