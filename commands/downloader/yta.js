@@ -1,62 +1,54 @@
-const { yta } = require('../../utils/youtube')
-const { fetchText, textParse } = require('../../utils')
-const { MessageType } = require('@adiwajshing/baileys')
+const ytsr = require('ytsr')
 const lang = require('../other/text.json')
-const eq = require('../../core/connect').Whatsapp
+const { Whatsapp: ev } = require('../../core/connect')
 const { validateURL } = require('../../utils/youtube-url-utils')
+const { fetchBuffer, fetchText, textParse } = require('../../utils')
 
 module.exports = {
-    name: 'yta',
-    aliases: ['ytmp3', 'ytaudio'],
-    category: 'Downloader',
-    desc: 'Download YouTube Audio',
-    async execute(msg, wa, args) {
-        try {
-            if (args.length < 1) return wa.reply(msg.from, `URL not provided`, msg)
-            let { url, opt } = textParse(args.join(" "))
-            if (!validateURL(url)) return wa.reply(msg.from, lang.eng.util.download.notYTURL, msg)
-            wa.reply(msg.from, `IND:\n${lang.indo.util.download.progress}\n\nEN:\n${lang.eng.util.download.progress}`, msg)
-
-            const res = await yta(url)
-            switch (opt) {
-                case "--doc":
-                    if (res.filesize >= 15 << 10) {
-                        let short = await fetchText(`https://tinyurl.com/api-create.php?url=${res.dl_link}`)
-                        let capt = `*Title:* ${res.title}\n`
-                            + `*ID:* ${res.id}\n*Quality:* ${res.q}\n*Size:* ${res.filesizeF}\n*Download:* ${short}\n\n_Filesize to big_`
-                        await eq.sendMessage(msg.from, { url: res.thumb }, MessageType.image, { caption: capt, quoted: msg })
-                    } else {
-                        await eq.sendMessage(msg.from, { url: res.dl_link }, MessageType.document, {
-                            mimetype: "audio/mp4",
-                            filename: res.title + ".mp3",
-                            quoted: msg
-                        })
-                    }
-                    break
-                case "--ptt":
-                    if (res.filesize >= 15 << 10) {
-                        let short = await fetchText(`https://tinyurl.com/api-create.php?url=${res.dl_link}`)
-                        let capt = `*Title:* ${res.title}\n`
-                            + `*ID:* ${res.id}\n*Quality:* ${res.q}\n*Size:* ${res.filesizeF}\n*Download:* ${short}\n\n_Filesize to big_`
-                        await eq.sendMessage(msg.from, { url: res.thumb }, MessageType.image, { caption: capt, quoted: msg })
-                    } else {
-                        await eq.sendMessage(msg.from, { url: res.dl_link }, MessageType.audio, { quoted: msg, ptt: true, mimetype: "audio/mp4" })
-                    }
-                    break
-                default:
-                    if (res.filesize >= 15 << 10) {
-                        let short = await fetchText(`https://tinyurl.com/api-create.php?url=${res.dl_link}`)
-                        let capt = `*Title:* ${res.title}\n`
-                            + `*ID:* ${res.id}\n*Quality:* ${res.q}\n*Size:* ${res.filesizeF}\n*Download:* ${short}\n\n_Filesize to big_`
-                        await eq.sendMessage(msg.from, { url: res.thumb }, MessageType.image, { caption: capt, quoted: msg })
-                    } else {
-                        await eq.sendMessage(msg.from, { url: res.dl_link }, MessageType.audio, { quoted: msg, mimetype: "audio/mp4" })
-                    }
-            }
-
-        } catch (e) {
-            console.log(e)
-            wa.reply(msg.from, 'Something went wrong, check back later.', msg)
-        }
-    }
+	name: 'yta',
+	aliases: ['ytmp3', 'ytaudio'],
+	category: 'Downloader',
+	desc: 'Download YouTube Audio',
+	async execute(msg, wa, args) {
+		try {
+			const { from } = msg
+			if (args.length < 1) return wa.reply(from, `URL not provided`, msg)
+			let { url, opt } = textParse(args.join(' '))
+			if (!validateURL(url)) return wa.reply(from, lang.eng.util.download.notYTURL, msg)
+			wa.reply(from, `IND:\n${lang.indo.util.download.progress}\n\nEN:\n${lang.eng.util.download.progress}`, msg)
+			let { items } = await ytsr(args[0])
+			let ytLink = `https://yt-downloader.akkun3704.repl.co/?url=${url}&filter=audioonly&quality=highest&contenttype=audio/mp3`
+			const res = await fetchBuffer(ytLink)
+			switch (opt) {
+				case '--doc':
+					if (res.length > 15000000) {
+						let short = await fetchText(`https://tinyurl.com/api-create.php?url=${ytLink}`)
+						let caption = `*Title:* ${items[0].title}\n*Views:* ${items[0].views}\n*Duration:* ${items[0].duration}\n*Download:* ${short}\n\n_Filesize too big_`
+						await wa.mediaURL(from, items[0].thumbnails[0].url, { quoted: msg, caption })
+					} else {
+						await ev.sendMessage(from, res, 'documentMessage', { mimetype: 'audio/mp4', filename: items[0].title + '.mp3', quoted: msg })
+					}
+					break
+				case '--ptt':
+					if (res.length > 15000000) {
+						let short = await fetchText(`https://tinyurl.com/api-create.php?url=${ytLink}`)
+						let caption = `*Title:* ${items[0].title}\n*Views:* ${items[0].views}\n*Duration:* ${items[0].duration}\n*Download:* ${short}\n\n_Filesize too big_`
+						await wa.mediaURL(from, items[0].thumbnails[0].url, { quoted: msg, caption })
+					} else {
+						await ev.sendMessage(from, res, 'audioMessage', { mimetype: 'audio/mp4', ptt: true, quoted: msg })
+					}
+					break
+				default:
+					if (res.length > 15000000) {
+						let short = await fetchText(`https://tinyurl.com/api-create.php?url=${ytLink}`)
+						let caption = `*Title:* ${items[0].title}\n*Views:* ${items[0].views}\n*Duration:* ${items[0].duration}\n*Download:* ${short}\n\n_Filesize too big_`
+						await wa.mediaURL(from, items[0].thumbnails[0].url, { quoted: msg, caption })
+					} else {
+						await ev.sendMessage(from, res, 'documentMessage', { mimetype: 'audio/mp4', filename: items[0].title + '.mp3', quoted: msg })
+					}
+			}
+		} catch (e) {
+			wa.reply(msg.from, String(e), msg)
+		}
+	}
 }
