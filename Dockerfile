@@ -12,7 +12,7 @@ RUN apt-get update && \
 COPY package.json .
 
 RUN npm install && \
-  npm install -y ytdl-core@latest
+  npm install -y speed-test@latest
 
 COPY . .
 
