@@ -2,6 +2,7 @@ FROM node:lts-buster
 
 RUN apt-get update && \
   apt-get install -y \
+  neofetch \
   ffmpeg \
   imagemagick \
   webp && \
@@ -11,7 +12,7 @@ RUN apt-get update && \
 COPY package.json .
 
 RUN npm install && \
-  npm install -y speed-test@latest
+  npm install -y ytdl-core@latest
 
 COPY . .
 
