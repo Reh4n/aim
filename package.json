@@ -11,6 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "@adiwajshing/baileys": "^3.5.3",
+    "@bochilteam/scraper": "latest",
     "@discordjs/collection": "^0.3.2",
     "axios": "^0.24.0",
     "chalk": "^4.1.2",
