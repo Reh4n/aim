@@ -13,8 +13,8 @@ module.exports = {
             timestamp: m.timestamp
         })
         switch (context) {
-            case "telegram bot":
-                await ev.sendMessage(from, "t.me/Nyarlathotepp_bot\nMy Telegram Bot\nThanks for using my bot.", "conversation", { detectLinks: false, quoted: e })
+            case "source code":
+                await ev.sendMessage(from, "https://github.com/FaizBastomi/wbot/", "conversation", { detectLinks: true, quoted: e })
                 break;
             case "":
                 break;
