@@ -50,7 +50,7 @@ module.exports = {
       }
       str += `send ${prefix}help followed by a command name to get detail of command, e.g. ${prefix}help sticker`;
       let buttons = [
-        { buttonId: crypto.randomBytes(3).join(''), buttonText: { displayText: 'TELEGRAM BOT' }, type: 1 }
+        { buttonId: crypto.randomBytes(3).join(''), buttonText: { displayText: 'SOURCE CODE' }, type: 1 }
       ]
       wa.sendButtons(msg.from, str, buttons, { quoted: msg })
     }
