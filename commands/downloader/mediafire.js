@@ -5,7 +5,7 @@ const { fetchBuffer } = require('../../utils')
 
 module.exports = {
 	name: 'mediafire',
-	category: 'downloader',
+	category: 'Downloader',
 	async execute(msg, wa, args) {
 		const { from } = msg
 		if (!args[0]) return wa.reply(from, 'Input url', msg)
