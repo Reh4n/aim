@@ -28,6 +28,7 @@
     "node-fetch": "^2.6.6",
     "pdfkit": "^0.13.0",
     "pm2": "^5.1.0",
+    "popcat-wrapper": "latest",
     "speed-test": "*",
     "webp-converter": "^2.3.3",
     "wikijs": "^6.3.2",
