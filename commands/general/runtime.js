@@ -1,7 +1,7 @@
 module.exports = {
 	name: 'runtime',
 	aliases: ['uptime'],
-	category: 'info',
+	category: 'general',
 	async execute(msg, wa) {
 		wa.reply(msg.from, clockString(process.uptime()), msg)
 	}
