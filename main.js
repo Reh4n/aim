@@ -34,6 +34,7 @@ readCmd();
 
 con.connect();
 process.on('uncaughtException', console.error);
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 
 function printLog(isCmd, body, sender, groupName, isGroup) {
 	const time = moment.tz('Asia/Jakarta').format('DD/MM/YY HH:mm:ss');
