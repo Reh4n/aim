@@ -18,21 +18,21 @@ module.exports = {
                     sticker((await fetchBuffer(links[args[0]])), { isImage: true, withPackInfo: true, cmdType: "2", packInfo: { packname: "Emoji", author: "Emojipedia.org" } })
                         .then((r) => {
                             wa.sticker(msg.from, r, { quoted: msg })
-                        }).catch(() => wa.reply(msg.from, "an error occurred while processing your request"))
+                        }).catch(() => wa.reply(msg.from, "an error occurred while processing your request", msg))
                 } else {
                     sticker((await fetchBuffer(links.whatsapp)), { isImage: true, withPackInfo: true, cmdType: "2", packInfo: { packname: "Emoji", author: "Emojipedia.org" } })
                         .then((r) => {
                             wa.sticker(msg.from, r, { quoted: msg })
-                        }).catch(() => wa.reply(msg.from, "an error occurred while processing your request"))
+                        }).catch(() => wa.reply(msg.from, "an error occurred while processing your request", msg))
                 }
             } else {
                 let links = await emojiped(args[0])
-                const r = await sticker((await fetchBuffer(links.whatsapp)), { isImage: true, withPackInfo: true, cmdType: "2", packInfo: { packname: "Emoji", author: "Emojipedia.org" } }).catch(() => wa.reply(msg.from, "an error occurred while processing your request"))
+                const r = await sticker((await fetchBuffer(links.whatsapp)), { isImage: true, withPackInfo: true, cmdType: "2", packInfo: { packname: "Emoji", author: "Emojipedia.org" } }).catch(() => wa.reply(msg.from, "an error occurred while processing your request", msg))
                 wa.sticker(msg.from, r, { quoted: msg })
             }
         } catch(e) {
 	    console.log(e)
-            wa.reply(msg.from, "an error occurred while processing your request")
+            wa.reply(msg.from, "an error occurred while processing your request", msg)
         }
     }
 }
