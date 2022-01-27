@@ -4,10 +4,20 @@ module.exports = {
 	category: 'general',
 	desc: 'Search image from pinterest.',
 	async execute(msg, wa, args) {
-		if (!args.join(' ')) return wa.reply(msg.from, 'Input query', msg)
+		let q = args.join(' ')
+		if (!q) return wa.reply(msg.from, 'Input query', msg)
 		await wa.reply(msg.from, 'Loading...', msg)
-		pinterest(args.join(' ')).then(res => {
-			wa.mediaURL(msg.from, res, { quoted: msg, caption: res })
+		pinterest(q).then(async (res) => {
+			const struct = {
+				contentText: `Hasil Pencarian: ${q}`,
+				footerText: res,
+				buttons: [{
+					buttonText: { displayText: 'Next' }, buttonId: `#pin ${q} SMH`, type: 1
+				}]
+				imageMessage: await ev.prepareMessageMedia({ url: res }, 'imageMessage'),
+				headerType: 'IMAGE'
+			}
+			await ev.sendMessage(from, struct, 'buttonsMessage', { quoted: msg })
 		}).catch(wa.reply)
 	}
 }
