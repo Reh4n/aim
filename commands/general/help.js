@@ -25,7 +25,7 @@ module.exports = {
       const { sender } = msg;
       const { prefix, commands } = djs;
       const cmds = commands.keys()
-      const pushname =
+      const pushname = msg.key.fromMe ? ev.user.name :
         ev.contacts[sender] !== undefined
           ? ev.contacts[sender].notify || ev.contacts[sender].vname || ev.contacts[sender].name
           : undefined;
@@ -50,7 +50,7 @@ module.exports = {
       }
       str += `send ${prefix}help followed by a command name to get detail of command, e.g. ${prefix}help sticker`;
       let buttons = [
-        { buttonId: crypto.randomBytes(3).join(''), buttonText: { displayText: 'SOURCE CODE' }, type: 1 }
+        { buttonId: '#owner SMH', buttonText: { displayText: 'OWNER' }, type: 1 }
       ]
       wa.sendButtons(msg.from, str, buttons, { quoted: msg })
     }
