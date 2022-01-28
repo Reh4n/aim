@@ -23,14 +23,14 @@ module.exports = {
 				buttonText: { displayText: 'Video' }, buttonId: `#ytv ${s[0].url} SMH`, type: 1
 			}]
 		}
-		await ev.sendMessage(from, struct, 'buttonsMessage', { quoted: msg }).then(async (msg) => {
+		await wa.custom(from, struct, 'buttonsMessage', { quoted: msg }).then(async (msg) => {
 			try {
-				// if (res.length > 15000000) {
+				if (res.length > 15000000) {
 					let caption = `*Title:* ${items[0].title}\n*Views:* ${items[0].views}\n*Duration:* ${items[0].duration}\n*Download:* ${dl_link}`
-					await ev.sendMessage(from, b, 'imageMessage', { quoted: msg, caption })
-				// } else {
-					ev.sendMessage(from, res, 'audioMessage', { mimetype: 'audio/mp4', quoted: msg })
-				// }
+					wa.mediaURL(from, s[0].thumbnails[0].url, { quoted: msg, caption })
+				} else {
+					wa.custom(from, res, 'audioMessage', { mimetype: 'audio/mp4', quoted: msg })
+				}
 			} catch (e) {
 				wa.reply(msg.from, String(e), msg)
 			}
