@@ -114,7 +114,7 @@ ev.on('chat-update', async (msg) => {
 
 		const now = Date.now();
 		const timestamps = cooldown.get(from);
-		const cooldownAmount = (command.cooldown || 3) * 1000;
+		const cooldownAmount = (command.cooldown || 2) * 1000;
 
 		if (timestamps.has(from)) {
 			const expirationTime = timestamps.get(from) + cooldownAmount;
