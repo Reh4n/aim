@@ -25,7 +25,7 @@ module.exports = {
 				let buffer = await toPDF(images)
 				let thumbnail = await compressImage(images[0])
 				await wa.custom(from, buffer, 'documentMessage', { quoted: msg, filename: `${title}.pdf`, mimetype: 'application/pdf', thumbnail })
-			}
+			} else wa.reply(from, 'Reply chat bot hasil pencarian doujindesu!', msg)
 		} catch (e) {
 			wa.reply(msg.from, String(e), msg)
 		}
