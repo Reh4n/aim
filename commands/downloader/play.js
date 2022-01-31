@@ -25,7 +25,7 @@ module.exports = {
 		}
 		await ev.sendMessage(from, struct, 'buttonsMessage', { quoted: msg }).then(async (msg) => {
 			try {
-				if (res.length > 15000000) {
+				if (res.length > 15000 << 10) {
 					let caption = `*Title:* ${items[0].title}\n*Views:* ${items[0].views}\n*Duration:* ${items[0].duration}\n*Download:* ${dl_link}\n\n_Filesize too big_`
 					await wa.mediaURL(from, s[0].thumbnails[0].url, { quoted: msg, caption })
 				} else {
