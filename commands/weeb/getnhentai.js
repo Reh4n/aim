@@ -19,7 +19,7 @@ module.exports = {
 				pages = await toPDF(pages)
 				let thumbnail = await fetchBuffer(cover)
 				await wa.custom(from, pages, 'documentMessage', { quoted: msg, filename: `${title.default}.pdf`, mimetype: 'application/pdf', thumbnail })
-			}
+			} else wa.reply(from, 'Reply chat bot hasil pencarian nhentai!', msg)
 		} catch (e) {
 			wa.reply(msg.from, String(e), msg)
 		}
