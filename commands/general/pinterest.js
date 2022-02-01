@@ -8,7 +8,7 @@ module.exports = {
 		await wa.reply(msg.from, 'Loading...', msg)
 		pinterest(args.join(' ')).then(res => {
 			wa.mediaURL(msg.from, res, { quoted: msg, caption: `Hasil Pencarian: ${args.join(' ')}\nUrl: ${res}` })
-		}).catch(wa.reply)
+		}).catch(e => wa.reply(msg.from, String(e), msg))
 	}
 }
 
