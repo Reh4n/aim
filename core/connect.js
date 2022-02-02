@@ -1,8 +1,32 @@
-const { WAConnection, Browsers } = require('@adiwajshing/baileys');
+const { WAConnection, Browsers, WAMetric } = require('@adiwajshing/baileys');
+const Jimp = require('jimp');
 const fs = require('fs');
 
 const conn = new WAConnection();
 conn['battery'] = { value: null, charge: false, lowPower: false };
+conn['updateProfilePicture'] = async (jid, img) => {
+  const data = await generateProfilePicture(img)
+  const tag = conn.generateMessageTag()
+  const query = ['picture', { jid: jid, id: tag, type: 'set' }, [['image', null, data.img], ['preview', null, data.preview]]]
+  const response = await (conn.setQuery([query], [WAMetric.picture, 136], tag))
+  if (jid === conn.user.jid) conn.user.imgUrl = response.eurl
+  else if (conn.chats.get(jid)) {
+    conn.chats.get(jid).imgUrl = response.eurl
+    conn.emit('chat-update', { jid, imgUrl: response.eurl })
+  }
+  return response
+}
+
+async function generateProfilePicture(buffer) {
+  const jimp = await Jimp.read(buffer)
+  const min = jimp.getWidth()
+  const max = jimp.getHeight()
+  const cropped = jimp.crop(0, 0, min, max)
+  return {
+    img: await cropped.scaleToFit(720, 720).getBufferAsync(Jimp.MIME_JPEG),
+    preview: await cropped.normalize().getBufferAsync(Jimp.MIME_JPEG)
+  }
+}
 
 exports.Whatsapp = conn;
 
