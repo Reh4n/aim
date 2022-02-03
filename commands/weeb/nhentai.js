@@ -15,16 +15,16 @@ module.exports = {
 				case 'latest': {
 					let res = await getLatest()
 					let thumbnail = await fetchBuffer(res[0].thumbnail)
-					await wa.custom(from, res.map((v, i) => `${i + 1}. ${v.title}`).join('\n\n'), 'extendedTextMessage', { quoted: msg, messageId: generateMessageID().slice(0, 5) + 'NHENTAI', contextInfo: { externalAdReply: { title: res[0].title, body: 'Nhentai Latest', thumbnail, sourceUrl: 'https://hiken.xyz/v/' + res[0].id }}})
+					await wa.custom(from, res.map((v, i) => `${i + 1}. ${v.title}\nLink: https://hiken.xyz/v/${v.id}`).join('\n\n'), 'extendedTextMessage', { quoted: msg, messageId: generateMessageID().slice(0, 5) + 'NHENTAI', contextInfo: { externalAdReply: { title: res[0].title, body: 'Nhentai Latest', thumbnail, sourceUrl: 'https://hiken.xyz/v/' + res[0].id }}})
 					break
 				}
 				case 'search': {
 					if (!args[1]) return wa.reply(from, 'Input query', msg)
 					await wa.reply(from, 'Loading...', msg)
-					let res = await search(args.splice(1).join(' '))
-					console.log(args.splice(1).join(' '))
+					let res = await search(args.slice(1).join(' '))
+					console.log(args.slice(1).join(' '))
 					let thumbnail = await fetchBuffer(res[0].thumbnail)
-					await wa.custom(from, res.map((v, i) => `${i + 1}. ${v.title}`).join('\n\n'), 'extendedTextMessage', { quoted: msg, messageId: generateMessageID().slice(0, 5) + 'NHENTAI', contextInfo: { externalAdReply: { title: res[0].title, body: 'Nhentai Search', thumbnail, sourceUrl: 'https://hiken.xyz/v/' + res[0].id }}})
+					await wa.custom(from, res.map((v, i) => `${i + 1}. ${v.title}\nLink: https://hiken.xyz/v/${v.id}`).join('\n\n'), 'extendedTextMessage', { quoted: msg, messageId: generateMessageID().slice(0, 5) + 'NHENTAI', contextInfo: { externalAdReply: { title: res[0].title, body: 'Nhentai Search', thumbnail, sourceUrl: 'https://hiken.xyz/v/' + res[0].id }}})
 					break
 				}
 				case 'pdf': {
@@ -55,7 +55,7 @@ module.exports = {
 					await wa.reply(from, 'Loading...', msg)
 					let res = await getPopular()
 					let thumbnail = await fetchBuffer(res[0].thumbnail)
-					await wa.custom(from, res.map((v, i) => `${i + 1}. ${v.title}`).join('\n\n'), 'extendedTextMessage', { quoted: msg, messageId: generateMessageID().slice(0, 5) + 'NHENTAI', contextInfo: { externalAdReply: { title: res[0].title, body: 'Nhentai Popular', thumbnail, sourceUrl: 'https://hiken.xyz/v/' + res[0].id }}})
+					await wa.custom(from, res.map((v, i) => `${i + 1}. ${v.title}\nLink: https://hiken.xyz/v/${v.id}`).join('\n\n'), 'extendedTextMessage', { quoted: msg, messageId: generateMessageID().slice(0, 5) + 'NHENTAI', contextInfo: { externalAdReply: { title: res[0].title, body: 'Nhentai Popular', thumbnail, sourceUrl: 'https://hiken.xyz/v/' + res[0].id }}})
 				}
 			}
 		} catch (e) {
