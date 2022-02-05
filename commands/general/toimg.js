@@ -34,7 +34,7 @@ module.exports = {
       const media = await ev.downloadAndSaveMediaMessage(quoted, `./temp/${ran}`);
       const ezgif = await webp2mp4(media);
       await wa.mediaURL(from, ezgif, { quoted: msg });
-      fs.unlinkSync(path);
+      fs.unlinkSync(media);
     } else {
       wa.reply(from, `IND:\n${lang.indo.util.toimg.msg}\n\nEN:\n${lang.eng.util.toimg.msg}`, msg);
     }
