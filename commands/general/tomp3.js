@@ -6,7 +6,7 @@ module.exports = {
   category: 'general',
   description: 'Convert your video to mp3',
   async execute(msg, wa) {
-    const { from, quoted } = msg
+    const { from, quoted, type } = msg
     
     const content = JSON.stringify(quoted)
     const isQAud = type === 'extendedTextMessage' && content.includes('audioMessage')
