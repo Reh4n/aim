@@ -1,4 +1,5 @@
 const { toAudio } = require('../../core/convert')
+const { Whatsapp: ev } = require('../../core/connect')
 
 module.exports = {
   name: 'tomp3',
