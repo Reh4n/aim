@@ -13,7 +13,7 @@ module.exports = {
     const isQVid = type === 'extendedTextMessage' && content.includes('videoMessage')
     const isQDoc = type === 'extendedTextMessage' && content.includes('documentMessage')
     
-    if (msg.message.videoMessage || isQVid || (isQAud && quoted.message.audioMessage.ptt === true) || (isQDoc && quoted.message.documentMessage.mimetype.includes('video')) {
+    if (msg.message.videoMessage || isQVid || (isQAud && quoted.message.audioMessage.ptt === true) || (isQDoc && quoted.message.documentMessage.mimetype.includes('video'))) {
       const encmed = quoted ? quoted : msg
       const media = await ev.downloadMediaMessage(encmed, 'buffer')
       toAudio(media, 'mp4').then((r) => {
