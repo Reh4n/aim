@@ -2,7 +2,7 @@ const axios = require("axios").default;
 const cheerio = require("cheerio");
 const BodyForm = require("form-data");
 const { fromBuffer } = require("file-type");
-const { fetchBuffer, formatSize } = require("./index");
+const { fetchBuffer } = require("./index");
 const { createReadStream, unlinkSync, promises } = require("fs");
 
 const webp2mp4 = (path) => {
@@ -61,13 +61,13 @@ const uploaderAPI = (fileData, type) => new Promise(async (resolve, reject) => {
                 responseType: "json", headers: { ...form.getHeaders() }
             });
             if (data.error) reject(data.error);
-            return { host: "telegraph", data: { name: filePath.replace("utils/", ""), url: 'https://telegra.ph' + data[0].src, size: formatSize(fileData.length) } };
+            return { host: "telegraph", data: { name: filePath.replace("utils/", ""), url: 'https://telegra.ph' + data[0].src, size: fileData.length } };
         } else if (type === "uguu") {
             form.append("files[]", createReadStream(filePath));
             const { data } = await axios.post("https://uguu.se/upload.php", form, {
                 responseType: "json", headers: { ...form.getHeaders() }
             })
-            return { host: "uguu", data: { url: data.files[0].url, name: data.files[0].name, size: formatSize(parseInt(data.files[0].size)) } };
+            return { host: "uguu", data: { url: data.files[0].url, name: data.files[0].name, size: parseInt(data.files[0].size) } };
         } else if (type === "anonfiles") {
             form.append("file", createReadStream(filePath));
             const { data } = await axios.post("https://api.anonfiles.com/upload", form, {
