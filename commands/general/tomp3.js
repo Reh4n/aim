@@ -21,6 +21,6 @@ module.exports = {
       }).catch(() => {
         wa.reply(from, 'Ada yang Error.', msg)
       })         
-    } else wa.reply(from, 'IND: Silahkan kirim/reply voice note/video/dokumen yang ingin di convert ke audio.\n\nEN: Please send/reply the voice note/video/document you want to convert to a audio.', msg)
+    } else wa.reply(from, 'IND:\nSilahkan kirim/reply voice note/video/dokumen yang ingin di convert ke audio.\n\nEN:\nPlease send/reply the voice note/video/document you want to convert to a audio.', msg)
   }
 }
