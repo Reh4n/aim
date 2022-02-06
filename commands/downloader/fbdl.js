@@ -14,7 +14,7 @@ module.exports = {
             let data = await fbdl(args[0])
 
             if (data.length === 0) return wa.reply(msg.from, `ID:\n${lang.indo.util.download.fbPriv}\n\nEN:\n${lang.eng.util.download.fbPriv}`)
-            await ev.sendMessage(msg.from, { url: data[data.length - 1] }, "videoMessage", { quoted: msg })
+            await ev.sendMessage(msg.from, { url: data[0] }, "videoMessage", { quoted: msg })
         } catch(e) {
             wa.reply(msg.from, errMess, msg)
         }
