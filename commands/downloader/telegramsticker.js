@@ -28,6 +28,6 @@ module.exports = {
 			let [query, page] = args.join(' ').split('|')
 			let res = await stickerTelegram(query, page)
 			wa.reply(from, res.map(v => `*${v.title}*\n_${v.link}_`).join('\n\n'), msg)
-		} else wa.reply(fom, 'Input Query/URL', msg)
+		} else wa.reply(from, 'Input Query/URL', msg)
 	}
 }
