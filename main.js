@@ -108,9 +108,9 @@ ev.on('chat-update', async (msg) => {
 
 		if (!command) return;
 
-		if (!cooldown.has(from)) {
-			cooldown.set(from, new djs.Collection());
-		}
+		//if (!cooldown.has(from)) {
+			//cooldown.set(from, new djs.Collection());
+		//}
 
 		const now = Date.now();
 		const timestamps = cooldown.get(from);
