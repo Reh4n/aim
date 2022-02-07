@@ -108,9 +108,9 @@ ev.on('chat-update', async (msg) => {
 
 		if (!command) return;
 
-		//if (!cooldown.has(from)) {
-			//cooldown.set(from, new djs.Collection());
-		//}
+		/*if (!cooldown.has(from)) {
+			cooldown.set(from, new djs.Collection());
+		}
 
 		const now = Date.now();
 		const timestamps = cooldown.get(from);
@@ -134,7 +134,7 @@ ev.on('chat-update', async (msg) => {
 		}
 
 		timestamps.set(from, now);
-		setTimeout(() => timestamps.delete(from), cooldownAmount);
+		setTimeout(() => timestamps.delete(from), cooldownAmount);*/
 
 		try {
 			command.execute(msg, wa, args, arg);
