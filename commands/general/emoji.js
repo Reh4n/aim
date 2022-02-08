@@ -42,9 +42,9 @@ module.exports = {
 					cp.exec(`ffmpeg -i ./temp/${rand} -i ./temp/${rand1} -filter_complex hstack ./temp/${msg.sender}.png`, function (e) {
 						if (e) return wa.reply(msg.from, "ada yang eror.", msg) && fs.unlinkSync(`./temp/${rand}`) && fs.unlinkSync(`./temp/${rand1}`)
 						sticker(`./temp/${msg.sender}.png`, { isImage: true, withPackInfo: true, cmdType: "2", packInfo: { packname: "Emoji", author: "Emojipedia.org" }}).then((r) => wa.sticker(msg.from, r, { quoted: msg }))
-						fs.unlinkSync(`./temp/${rand}`)
+						/*fs.unlinkSync(`./temp/${rand}`)
 						fs.unlinkSync(`./temp/${rand1}`)
-						fs.unlinkSync(`./temp/${msg.sender}.png`)
+						fs.unlinkSync(`./temp/${msg.sender}.png`)*/
 					})
 				}
 			}
