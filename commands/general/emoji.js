@@ -37,8 +37,8 @@ module.exports = {
 					let emo = new Graphemer().splitGraphemes(args.join(' '))
 					let links = await emoji(emo[0]), links1 = await emoji(emo[1] == 0 ? emo[2] : emo[1])
 					let rand = getRandom('.jpeg'), rand1 = getRandom('.jpeg')
-					fs.writeFileSync(`./temp/${rand}`, await fetchBuffer(links.whatsapp))
-					fs.writeFileSync(`./temp/${rand1}`, await fetchBuffer(links1.whatsapp))
+					await fs.promises.writeFile(`./temp/${rand}`, await fetchBuffer(links.whatsapp))
+					await fs.promises.writeFile(`./temp/${rand1}`, await fetchBuffer(links1.whatsapp))
 					cp.exec(`ffmpeg -i ./temp/${rand} -i ./temp/${rand1} -filter_complex hstack ./temp/${msg.sender}.png`, function (e) {
 						if (e) return wa.reply(msg.from, "ada yang eror.", msg) && fs.unlinkSync(`./temp/${rand}`) && fs.unlinkSync(`./temp/${rand1}`)
 						sticker(`./temp/${msg.sender}.png`, { isImage: true, withPackInfo: true, cmdType: "2", packInfo: { packname: "Emoji", author: "Emojipedia.org" }}).then((r) => wa.sticker(msg.from, r, { quoted: msg }))
