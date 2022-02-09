@@ -1,9 +1,8 @@
-const fs = require("fs")
-const cp = require("child_process")
 const emoji = require("../../utils/emojiped")
 const { sticker } = require("../../core/convert")
+const { fetchBuffer } = require("../../utils/index")
 const { default: Graphemer } = require("graphemer")
-const { getRandom, fetchBuffer } = require("../../utils/index")
+
 
 module.exports = {
 	name: "emoji",
@@ -29,24 +28,10 @@ module.exports = {
 					}).catch(() => wa.reply(msg.from, "an error occurred while processing your request", msg))
 				}
 			} else {
-				try {
-					let links = await emoji(args[0])
-					const r = await sticker((await fetchBuffer(links.whatsapp)), { isImage: true, withPackInfo: true, cmdType: "2", packInfo: { packname: "Emoji", author: "Emojipedia.org" } }).catch(() => wa.reply(msg.from, "an error occurred while processing your request", msg))
-					wa.sticker(msg.from, r, { quoted: msg })
-				} catch {
-					let emo = new Graphemer().splitGraphemes(args.join(' '))
-					let links = await emoji(emo[0]), links1 = await emoji(emo[1] == 0 ? emo[2] : emo[1])
-					let rand = getRandom('.jpeg'), rand1 = getRandom('.jpeg')
-					await fs.promises.writeFile(`./temp/${rand}`, await fetchBuffer(links.whatsapp))
-					await fs.promises.writeFile(`./temp/${rand1}`, await fetchBuffer(links1.whatsapp))
-					cp.exec(`ffmpeg -i ./temp/${rand} -i ./temp/${rand1} -filter_complex hstack=inputs=2 ./temp/${msg.sender}.png`, function (e) {
-						if (e) return wa.reply(msg.from, "ada yang eror.", msg) && fs.unlinkSync(`./temp/${rand}`) && fs.unlinkSync(`./temp/${rand1}`)
-						sticker(`./temp/${msg.sender}.png`, { isImage: true, withPackInfo: true, cmdType: "1", packInfo: { packname: "Emoji", author: "Emojipedia.org" }}).then((r) => wa.sticker(msg.from, r, { quoted: msg }))
-						/*fs.unlinkSync(`./temp/${rand}`)
-						fs.unlinkSync(`./temp/${rand1}`)
-						fs.unlinkSync(`./temp/${msg.sender}.png`)*/
-					})
-				}
+				let emo = new Graphemer().splitGraphemes(args.join(' '))
+				let links = await emoji(emo[0])
+				const r = await sticker((await fetchBuffer(links.whatsapp)), { isImage: true, withPackInfo: true, cmdType: "2", packInfo: { packname: "Emoji", author: "Emojipedia.org" } }).catch(() => wa.reply(msg.from, "an error occurred while processing your request", msg))
+				wa.sticker(msg.from, r, { quoted: msg })
 			}
 		} catch(e) {
 			console.log(e)
