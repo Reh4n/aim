@@ -3,7 +3,8 @@ const { fetchBuffer } = require('../../utils/index')
 
 module.exports = {
 	name: 'emojimix',
-	type: 'general',
+	desc: 'Mix your emoji.',
+	category: 'general',
 	async execute(msg, wa, args) {
 		try {
 			let emo = args.join(' ').split('+')
