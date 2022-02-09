@@ -15,7 +15,7 @@ module.exports = {
 			let { url, opt } = textParse(args.join(' '))
 			if (!validateURL(url)) return wa.reply(from, lang.eng.util.download.notYTURL, msg)
 			wa.reply(from, `IND:\n${lang.indo.util.download.progress}\n\nEN:\n${lang.eng.util.download.progress}`, msg)
-			let { items } = await ytsr(args[0])
+			let { items } = await ytsr(url)
 			let ytLink = `https://yt-downloader.akkun3704.repl.co/?url=${url}&filter=audioonly&quality=highest&contenttype=audio/mp3`
 			const res = await fetchBuffer(ytLink)
 			switch (opt) {
