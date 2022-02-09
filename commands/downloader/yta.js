@@ -20,7 +20,7 @@ module.exports = {
 			const res = await fetchBuffer(ytLink)
 			switch (opt) {
 				case '--doc':
-					if (res.length > 15000000) {
+					if (items[0].duration.replace(/\D/g, '') > 10000) {
 						let caption = `*Title:* ${items[0].title}\n*Views:* ${items[0].views}\n*Duration:* ${items[0].duration}\n*Download:* ${ytLink}\n\n_Filesize too big_`
 						await wa.mediaURL(from, items[0].thumbnails[0].url, { quoted: msg, caption })
 					} else {
@@ -28,7 +28,7 @@ module.exports = {
 					}
 					break
 				case '--ptt':
-					if (res.length > 15000000) {
+					if (items[0].duration.replace(/\D/g, '') > 10000) {
 						let caption = `*Title:* ${items[0].title}\n*Views:* ${items[0].views}\n*Duration:* ${items[0].duration}\n*Download:* ${ytLink}\n\n_Filesize too big_`
 						await wa.mediaURL(from, items[0].thumbnails[0].url, { quoted: msg, caption })
 					} else {
@@ -36,7 +36,7 @@ module.exports = {
 					}
 					break
 				default:
-					if (res.length > 15000000) {
+					if (items[0].duration.replace(/\D/g, '') > 10000) {
 						let caption = `*Title:* ${items[0].title}\n*Views:* ${items[0].views}\n*Duration:* ${items[0].duration}\n*Download:* ${ytLink}\n\n_Filesize too big_`
 						await wa.mediaURL(from, items[0].thumbnails[0].url, { quoted: msg, caption })
 					} else {
