@@ -1,5 +1,5 @@
 const { Whatsapp: ev } = require("../../core/connect")
-const { getData } = require("../../database/group_setting")
+const { getData } = require("../../databases/group_setting")
 
 module.exports = {
   name: "groupinfo",
