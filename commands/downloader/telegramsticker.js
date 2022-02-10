@@ -12,7 +12,7 @@ module.exports = {
 		if (args[0] && args[0].match(/(https:\/\/t.me\/addstickers\/)/gi)) {
 			let res = await Telesticker(args[0])
 			await wa.reply(from, `Sending ${res.length} sticker(s)...`, msg)
-			if (res.length > 20) {
+			if (msg.isGroup && res.length > 20) {
 				await wa.reply(from, 'ID:\nJumlah stiker lebih dari 20, bot akan mengirimkannya di private chat.\n\nEN:\nNumber of stickers more than 20, bot will send them in private chat.', msg)
 				for (let i = 0; i < res.length; i++) {
 					let buffer = await fetchBuffer(res[i].url)
