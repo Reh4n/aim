@@ -4,7 +4,7 @@ const { getData } = require("../../databases/group_setting")
 module.exports = {
   name: "groupinfo",
   aliases: ["gcinfo", "grupinfo", "grupstats", "groupstats", "gcstats"],
-  category: "group",
+  category: "Group",
   desc: "Show this group information",
   async execute(msg, wa) {
     const { from, isGroup } = msg
