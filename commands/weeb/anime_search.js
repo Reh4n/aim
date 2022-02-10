@@ -2,8 +2,7 @@ const Jikan = require('jikan-node');
 const api = new Jikan();
 
 module.exports = {
-    name: 'search',
-    aliases: ['anime'],
+    name: 'anime',
     category: 'weebs',
     desc: 'Search for anime\ndata from myanimelist.net',
     async execute(msg, wa, args) {
@@ -29,7 +28,7 @@ module.exports = {
                 await wa.mediaURL(from, resp.results[0].image_url, { caption: text, quoted: msg });
             }
         } catch (e) {
-            await wa.reply(from, `Something bad happen\n${e.message}`, msg);
+            await wa.reply(from, `Something bad happen\n${e}`, msg);
         }
     }
 }
