@@ -51,7 +51,7 @@ module.exports = {
           pages = await toPDF(pages)
           let thumbnail = await fetchBuffer(cover)
           await wa.custom(from, pages, 'documentMessage', { quoted: msg, filename: `${title.default}.pdf`, mimetype: 'application/pdf', thumbnail })
-        } else if (args.join(' ') && typeof(args.join(' ')) === 'string') {
+        } else if (args.join(' ') && typeof(args.join(' ')) === 'string' && args[1] !== undefined) {
           await wa.reply(from, 'Loading...', msg)
           let res = await search(args.join(' '))
           let thumbnail = await fetchBuffer(res[0].thumbnail)
