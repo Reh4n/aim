@@ -1,5 +1,4 @@
-const { owner } = require('../../config.json')
-const pm2 = require('pm2');
+const { owner } = require('../../config.json');
 
 module.exports = {
   name: 'restart',
