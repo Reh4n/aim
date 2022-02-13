@@ -12,7 +12,7 @@ module.exports = {
     const isQVid = msg.type === 'extendedTextMessage' && content.includes('videoMessage')
     const isQDoc = msg.type === 'extendedTextMessage' && content.includes('documentMessage')
     try {
-      if (msg.type === 'videoMessage' || isQAud || isQVid || (isQDoc && /mp4|mp3/.test(msg.quoted.message.documentMessage.mimetype)) {
+      if (msg.type === 'videoMessage' || isQAud || isQVid || (isQDoc && /mp4|mp3/.test(msg.quoted.message.documentMessage.mimetype))) {
         let buffer = await ev.downloadMediaMessage(msg.quoted ? msg.quoted : msg)
         let res = await acr.identify(buffer)
         if (res.status.code !== 0) return wa.reply(msg.from, res.status.msg, msg)
