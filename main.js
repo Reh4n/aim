@@ -36,7 +36,7 @@ con.connect();
 process.on('uncaughtException', console.error);
 //process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 
-function printLog(isCmd, body, sender, groupName, isGroup) {
+function printLog(isCmd, body, sender, groupName, isGroup, from) {
 	const time = moment.tz('Asia/Jakarta').format('DD/MM/YY HH:mm:ss');
 	if (isCmd && isGroup) {
 		return console.log(color(`[${time}]`, 'yellow'), color('[EXEC]', 'aqua'), color(body, 'aqua'), color(`${sender.split('@')[0]}`, 'lime'), 'in', color(`${groupName} ${from}`, 'lime'));
