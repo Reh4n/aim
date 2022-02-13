@@ -135,5 +135,5 @@ module.exports = {
     toVideo: WAVideo,
     toAudio: WAAudio,
     toOpus: WAOpus,
-    sticker
+    sticker, convert
 }
