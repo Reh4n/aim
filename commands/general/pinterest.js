@@ -13,7 +13,7 @@ module.exports = {
 		q = q.endsWith('SMH') ? q.replace('SMH', '') : q
 		await wa.reply(msg.from, 'Loading...', msg)
 		pinterest(q).then(async (res) => {
-			if (/gif|video\/mp4/.test(res)) return wa.custom(msg.from, await toGif(res, 'mp4'), 'videoMessage', { quoted: msg, caption: `Result From: ${q}\nUrl: ${res}`, mimetype: 'video/gif' })
+			if (/gif|video\/mp4/.test(res)) return wa.custom(msg.from, await toGif((await axios(res, { responseType: 'arraybuffer' })).data, 'mp4'), 'videoMessage', { quoted: msg, caption: `Result From: ${q}\nUrl: ${res}`, mimetype: 'video/gif' })
 			let buttonsMessage = {
 				imageMessage: (await ev.prepareMessageMedia({ url: res }, 'imageMessage')).imageMessage,
 				contentText: `Result From: ${q}`,
