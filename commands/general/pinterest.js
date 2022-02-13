@@ -9,8 +9,9 @@ module.exports = {
 	async execute(msg, wa, args) {
 		let q = args.join(' ')
 		if (!q) return wa.reply(msg.from, 'Input query', msg)
+		q = q.endsWith('SMH') ? q.replace('SMH', '') : q
 		await wa.reply(msg.from, 'Loading...', msg)
-		pinterest(q.endsWith('SMH') ? q.replace('SMH', '') : q).then(async (res) => {
+		pinterest(q).then(async (res) => {
 			if (/gif|video\/mp4/.test(res)) return wa.custom(msg.from, { url: res }, 'videoMessage', { quoted: msg, caption: `Result From: ${q}\nUrl: ${res}` })
 			let buttonsMessage = {
 				imageMessage: (await ev.prepareMessageMedia({ url: res }, 'imageMessage')).imageMessage,
