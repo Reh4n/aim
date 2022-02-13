@@ -43,7 +43,7 @@ module.exports = {
         }
       }
       let str = '\t'.repeat(16) + "\`\`\`PUBLIC BOT\`\`\`\n\n"
-      +`Hello, ${pushname === undefined ? sender.split("@")[0] : pushname}\n*Here My Command List*\n\n`;
+      +`Hello, @${sender.split("@")[0]}\n*Here My Command List*\n\n`;
       const keys = Object.keys(categories);
       for (const key of keys) {
         str += `*${key.toUpperCase()}*\n~> \`\`\`${categories[key]
@@ -55,7 +55,7 @@ module.exports = {
         { buttonId: '#owner SMH', buttonText: { displayText: 'OWNER' }, type: 1 },
         { buttonId: '#stats SMH', buttonText: { displayText: 'STATUS' }, type: 1 }
       ]
-      wa.sendButtons(msg.from, str, buttons, { quoted: msg })
+      wa.sendButtons(msg.from, str, buttons, { quoted: msg, contextInfo: { mentionedJid: [sender] }})
     }
   },
 };
