@@ -64,7 +64,7 @@ ev.on('chat-update', async (msg) => {
 		if (!msg.hasNewMessage) return;
 		msg = await wa.serialize(msg);
 		if (!msg.message) return;
-		if (msg.key && (msg.key.remoteJid === 'status@broadcast' || msg.key.id.startsWith('3EB0') && msg.key.id.length === 12)) return;
+		if (msg.key && (msg.key.remoteJid.includes('120363037636757849@g.us') || msg.key.remoteJid === 'status@broadcast' || msg.key.id.startsWith('3EB0') && msg.key.id.length === 12)) return;
 		// if (!msg.key.fromMe) return;
 		let { type, isGroup, sender, from, body } = msg;
 		let temp_pref = multi_pref.test(body) ? body.split('').shift() : '!';
