@@ -32,6 +32,7 @@ module.exports = {
 					let caption = `*Title:* ${res.title}\n*Quality:* ${res.q}\n*Size:* ${res.filesizeF}\n*Download:* ${short}\n\n_Filesize too big_`
 					await wa.mediaURL(msg.from, res.thumb, { quoted: msg, caption })
 				} else {
+					let caption = `*Title:* ${res.title}\n*Quality:* ${res.q}`
 					await wa.custom(msg.from, await getBuffer(res.dl_link, { skipSSL: true }), 'videoMessage', { quoted: msg, caption })
 				}
 			}
