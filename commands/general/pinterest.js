@@ -1,4 +1,5 @@
 const axios = require('axios')
+const { toGif } = require('../../core/convert')
 const { Whatsapp: ev } = require('../../core/connect')
 
 module.exports = {
@@ -12,7 +13,7 @@ module.exports = {
 		q = q.endsWith('SMH') ? q.replace('SMH', '') : q
 		await wa.reply(msg.from, 'Loading...', msg)
 		pinterest(q).then(async (res) => {
-			if (/gif|video\/mp4/.test(res)) return wa.custom(msg.from, { url: res }, 'videoMessage', { quoted: msg, caption: `Result From: ${q}\nUrl: ${res}` })
+			if (/gif|video\/mp4/.test(res)) return wa.custom(msg.from, await toGif(res, 'gif'), 'videoMessage', { quoted: msg, caption: `Result From: ${q}\nUrl: ${res}`, mimetype: 'video/gif' })
 			let buttonsMessage = {
 				imageMessage: (await ev.prepareMessageMedia({ url: res }, 'imageMessage')).imageMessage,
 				contentText: `Result From: ${q}`,
