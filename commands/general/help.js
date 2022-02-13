@@ -12,7 +12,8 @@ module.exports = {
     if (args[0]) {
       const data = [];
       const name = args[0].toLowerCase();
-      const { commands, prefix } = djs;
+      const prefix = msg.body.slice(0, 1);
+      const { commands } = djs;
       const command = commands.get(name) || commands.find((cmd) => cmd.aliases && cmd.aliases.includes(name));
       if (!command) return wa.reply(msg.from, 'Perintah tidak tersedia.', msg);
       else data.push(command.name);
@@ -22,8 +23,9 @@ module.exports = {
 
       return wa.reply(msg.from, `${data.join('\n')}`, msg);
     } else {
-      const { sender } = msg;
-      const { prefix, commands } = djs;
+      const { sender, body } = msg;
+      const prefix = body.slice(0, 1);
+      const { commands } = djs;
       const cmds = commands.keys()
       const pushname = msg.key.fromMe ? ev.user.name :
         ev.contacts[sender] !== undefined
@@ -45,12 +47,13 @@ module.exports = {
       const keys = Object.keys(categories);
       for (const key of keys) {
         str += `*${key.toUpperCase()}*\n~> \`\`\`${categories[key]
-          .map((command) => command.name)
+          .map((command) => `${prefix}${command.name}`)
           .join(', ')}\`\`\`\n\n`;
       }
       str += `send ${prefix}help followed by a command name to get detail of command, e.g. ${prefix}help sticker`;
       let buttons = [
-        { buttonId: '#owner SMH', buttonText: { displayText: 'OWNER' }, type: 1 }
+        { buttonId: '#owner SMH', buttonText: { displayText: 'OWNER' }, type: 1 },
+        { buttonId: '#stats SMH', buttonText: { displayText: 'STATUS' }, type: 1 }
       ]
       wa.sendButtons(msg.from, str, buttons, { quoted: msg })
     }
