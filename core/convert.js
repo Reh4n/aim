@@ -91,6 +91,16 @@ async function WAOpus(file, ext1) {
     ]);
 }
 
+async function WAGif(file, ext1) {
+    return convert(file, ext1, "gif", [
+        '-c:v libx264',
+        '-profile:v high',
+        '-level 3.0',
+        '-pix_fmt yuv420p',
+        '-brand mp42'
+    ]);
+}
+
 async function sticker(file, opts) {
     if (typeof opts.cmdType === "undefined") opts.cmdType = "1"
     const cmd = {
@@ -135,5 +145,6 @@ module.exports = {
     toVideo: WAVideo,
     toAudio: WAAudio,
     toOpus: WAOpus,
+    toGif: WAGif,
     sticker, convert
 }
