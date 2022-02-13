@@ -117,7 +117,7 @@ exports.serialize = async function (chat) {
   }
 
   try {
-    const mention = m.message[m.type].contextInfo.mentionedJid;
+    const mention = m.message[m.type]?.contextInfo?.mentionedJid;
     m.mentionedJid = mention;
   } catch {
     m.mentionedJid = null;
