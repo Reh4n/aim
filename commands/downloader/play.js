@@ -1,6 +1,7 @@
 const yts = require('ytsr')
-const { fetchBuffer, fetchText } = require('../../utils')
+const { fetchText } = require('../../utils')
 const { Whatsapp: ev } = require('../../core/connect')
+const { compressImage } = require('@adiwajshing/baileys')
 
 module.exports = {
 	name: 'play',
@@ -11,11 +12,10 @@ module.exports = {
 		if (args.length < 1) return wa.reply(from, 'No query given to search.', msg)
 		const { items: s } = await yts(args.join(' '))
 		if (s.length === 0) return wa.reply(from, 'No video found for that keyword, try another keyword', msg)
-		const b = await fetchBuffer(s[0].thumbnails[0].url)
+		const b = await compressImage(s[0].thumbnails[0].url)
 		let dl_link = `https://yt-downloader.akkun3704.repl.co/?url=${s[0].url}&filter=audioonly&quality=highest&contenttype=audio/mp3`
-		// const res = await fetchBuffer(dl_link)
 		const struct = {
-			locationMessage: { jpegThumbnail: b.toString('base64') },
+			locationMessage: { jpegThumbnail: b },
 			contentText: `📙 Title: ${s[0].title}\n📎 Url: ${s[0].url}\n🚀 Upload: ${s[0].uploadedAt}\n\nWant a video version? click button below, or you don\'t see it? type *!ytv youtube_url*\n\nAudio on progress....`,
 			footerText: 'Nyarlathotep-Bot ⬩ Made by XÆ15 - T',
 			headerType: 6,
@@ -25,7 +25,6 @@ module.exports = {
 		}
 		await ev.sendMessage(from, struct, 'buttonsMessage', { quoted: msg }).then(async (msg) => {
 			try {
-				// let isLimit = 40 * 1000000 > res.length
 				if (s[0].duration.replace(/\D/g, '') > 10000) {
 					let caption = `*Title:* ${s[0].title}\n*Views:* ${s[0].views}\n*Duration:* ${s[0].duration}\n*Download:* ${dl_link}\n\n_Filesize too big_`
 					await wa.mediaURL(from, s[0].thumbnails[0].url, { quoted: msg, caption })
