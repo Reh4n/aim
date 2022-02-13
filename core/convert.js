@@ -92,7 +92,7 @@ async function WAOpus(file, ext1) {
 }
 
 async function WAGif(file, ext1) {
-    return convert(file, ext1, "gif", [
+    return convert(file, ext1, "mp4", [
         '-c:v libx264',
         '-profile:v high',
         '-level 3.0',
