@@ -19,18 +19,18 @@ module.exports = {
 				case '--doc':
 				if (res.videoDetails.lengthSeconds > 1800) {
 					let caption = `*Title:* ${res.videoDetails.title}\n*Views:* ${res.videoDetails.viewCount}\n*Duration:* ${clockString(res.videoDetails.lengthSeconds)}\n*Download:* ${ytLink}\n\n_Filesize too big_`
-					await wa.mediaURL(from, `https://i.ytimg.com/vi/${res.videoDetails.videoId}/0.jpg`, { quoted: msg, caption })
+					await wa.mediaURL(msg.from, `https://i.ytimg.com/vi/${res.videoDetails.videoId}/0.jpg`, { quoted: msg, caption })
 				} else {
-					await wa.custom(from, { url: ytLink }, 'documentMessage', { mimetype: 'video/mp4', filename: res.videoDetails.title + '.mp4', quoted: msg })
+					await wa.custom(msg.from, { url: ytLink }, 'documentMessage', { mimetype: 'video/mp4', filename: res.videoDetails.title + '.mp4', quoted: msg })
 				}
 				break
 				default:
 				if (res.videoDetails.lengthSeconds > 1800) {
 					let caption = `*Title:* ${res.videoDetails.title}\n*Views:* ${res.videoDetails.viewCount}\n*Duration:* ${clockString(res.videoDetails.lengthSeconds)}\n*Download:* ${ytLink}\n\n_Filesize too big_`
-					await wa.mediaURL(from, `https://i.ytimg.com/vi/${res.videoDetails.videoId}/0.jpg`, { quoted: msg, caption })
+					await wa.mediaURL(msg.from, `https://i.ytimg.com/vi/${res.videoDetails.videoId}/0.jpg`, { quoted: msg, caption })
 				} else {
 					let caption = `*Title:* ${res.videoDetails.title}`
-					await wa.custom(from, { url: ytLink }, 'videoMessage', { quoted: msg, caption })
+					await wa.custom(msg.from, { url: ytLink }, 'videoMessage', { quoted: msg, caption })
 				}
 			}
 		} catch (e) {
