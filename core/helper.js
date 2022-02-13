@@ -94,14 +94,13 @@ exports.serialize = async function (chat) {
         message: quote.quotedMessage.viewOnceMessage.message
       }
     } else if (quote.quotedMessage['buttonsMessage']) {
-      const tipe = Object.keys(quote.quotedMessage['buttonsMessage'])[0];
       m.quoted = {
         type: 'button',
         key: mkey.key,
-        type_msg: tipe,
+        type_msg: Object.keys(quote.quotedMessage['buttonsMessage'])[0],
         stanzaId: quote.stanzaId,
         participant: quote.participant,
-        message: quote.quotedMessage.buttonsMessage[tipe]
+        message: quote.quotedMessage.buttonsMessage
       }
     } else {
       m.quoted = {
