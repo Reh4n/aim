@@ -1,7 +1,7 @@
 const { WAConnection, Browsers, WAMetric } = require('@adiwajshing/baileys');
 const Jimp = require('jimp');
 const fs = require('fs');
-
+global.db = JSON.parse(fs.readFileSync('./database.json'))
 const conn = new WAConnection();
 conn['battery'] = { value: null, charge: false, lowPower: false };
 conn['updateProfilePicture'] = async (jid, img) => {
@@ -46,6 +46,7 @@ exports.connect = async () => {
   fs.existsSync('./Midnight.json') && conn.loadAuthInfo('./Midnight.json');
 
   await conn.connect({ timeoutMs: 3 * 1000 });
+  global.db.data = { users: {}, groups: {}, msgs: {}, stats: {}, ...(global.db.data || {}) }
   fs.writeFileSync('./Midnight.json', JSON.stringify(conn.base64EncodedAuthInfo(), null, '\t'));
   console.log('='.repeat(50));
   console.log(`| + WA Version: ${conn.user.phone.wa_version}`);
