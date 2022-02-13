@@ -17,8 +17,8 @@ module.exports = {
         let res = await acr.identify(buffer)
         if (res.status.code !== 0) return wa.reply(msg.from, res.status.msg, msg)
         let { title, artists, album, genres, release_date } = res.metadata.music[0]
-        let txt = `*RESULT FOUND*\n*• Title:* ${title}\n${artists ? `*• Artists:* ${artists.map(v => v.name).join(', ')}` : ''}\n${album ? `*• Album:* ${album.name}` : ''}\n${genres ? `*• Genres:* ${genres.map(v => v.name).join(', ')}` : ''}\n*• Release Date:* ${release_date}`.trim()
-        wa.reply(msg.from, txt, msg)
+        let txt = `*RESULT FOUND*\n\n*• Title:* ${title}${artists ? `\n*• Artists:* ${artists.map(v => v.name).join(', ')}` : ''}${album ? `\n*• Album:* ${album.name}` : ''}${genres ? `\n*• Genres:* ${genres.map(v => v.name).join(', ')}` : ''}\n*• Release Date:* ${release_date}`
+        wa.reply(msg.from, txt.trim(), msg)
       } else wa.reply(msg.from, 'ID:\n\nSilahkan kirim/reply audio/video/dokumen yang ingin dicari judul lagunya.\n\nEN:\n\nPlease send/reply the audio/video/document you want to identify the song.', msg)
     } catch (e) {
       console.log(e)
