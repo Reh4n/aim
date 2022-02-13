@@ -39,7 +39,7 @@ process.on('uncaughtException', console.error);
 function printLog(isCmd, body, sender, groupName, isGroup) {
 	const time = moment.tz('Asia/Jakarta').format('DD/MM/YY HH:mm:ss');
 	if (isCmd && isGroup) {
-		return console.log(color(`[${time}]`, 'yellow'), color('[EXEC]', 'aqua'), color(body, 'aqua'), color(`${sender.split('@')[0]}`, 'lime'), 'in', color(`${groupName}`, 'lime'));
+		return console.log(color(`[${time}]`, 'yellow'), color('[EXEC]', 'aqua'), color(body, 'aqua'), color(`${sender.split('@')[0]}`, 'lime'), 'in', color(`${groupName} ${from}`, 'lime'));
 	}
 	if (isCmd && !isGroup) {
 		return console.log(color(`[${time}]`, 'yellow'), color('[EXEC]', 'aqua'), color(body, 'aqua'), color(`${sender.split('@')[0]}`, 'lime'));
@@ -84,8 +84,8 @@ ev.on('chat-update', async (msg) => {
 		const groupMeta = isGroup ? await ev.groupMetadata(from) : '';
 		const groupSubject = isGroup ? groupMeta.subject : '';
 
-		// Log
-		printLog(isCmd, body, sender, groupSubject, isGroup);
+		// setInterval(() => fs.writeFileSync('./database.json', JSON.stringify(db, null, 2)), 60*1000);
+		printLog(isCmd, body, sender, groupSubject, isGroup, from);
 		
 		if (/^>?> /.test(body)) {
 			if (!owner.includes(sender)) return
