@@ -10,12 +10,12 @@ module.exports = {
 		let q = args.join(' ')
 		if (!q) return wa.reply(msg.from, 'Input query', msg)
 		await wa.reply(msg.from, 'Loading...', msg)
-		pinterest(q).then(async (res) => {
+		pinterest(q.endsWith('SMH') ? q.replace('SMH', '') : q).then(async (res) => {
 			if (/gif|video\/mp4/.test(res)) return wa.custom(msg.from, { url: res }, 'videoMessage', { quoted: msg, caption: `Result From: ${q}\nUrl: ${res}` })
 			let buttonsMessage = {
 				imageMessage: (await ev.prepareMessageMedia({ url: res }, 'imageMessage')).imageMessage,
 				contentText: `Result From: ${q}`,
-				footerText: `Url: ${res}`,
+				footerText: res,
 				headerType: 'IMAGE',
 				buttons: [{
 					buttonText: { displayText: 'Next' }, buttonId: `#pin ${q} SMH`, type: 1
