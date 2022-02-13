@@ -12,7 +12,7 @@ const joinHandler = require("./group_event");
 const { owner } = require('./config.json')
 const ev = con.Whatsapp;
 const prefix = '!';
-const multi_pref = new RegExp('^[' + '!#$%&?/;:,.<>~-+='.replace(/[|\\{}()[\]^$+*?.\-\^]/g, '\\$&') + ']');
+const multi_pref = new RegExp('^[' + '‎xzXZ/i!#$%+£¢€¥^°=¶∆×÷π√✓©®:;?&.\\-'.replace(/[|\\{}()[\]^$+*?.\-\^]/g, '\\$&') + ']');
 const time = moment.tz('Asia/jakarta').format('DD/MM/YY HH:mm:ss');
 
 djs.commands = new djs.Collection();
