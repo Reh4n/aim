@@ -4,7 +4,6 @@ const { fetchBuffer, toPDF } = require('../../utils')
 module.exports = {
 	name: 'getnhentai',
 	aliases: ['gethentai'],
-	category: 'weebs',
 	use: 'Ex: !gethentai 1 <reply chat bot>',
 	async execute(msg, wa, args) {
 		try {
