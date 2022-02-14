@@ -234,10 +234,10 @@ exports.sticker = function (jid, data, options = {}) {
   }
 };
 
-exports.sendButtons = async function (jid, text, buttons = [], options = {}) {
+exports.sendButtons = async function (jid, text, footer = 'Nyarlathotep-Bot ⬩ Made By Ripp', buttons = [], options = {}) {
   const struct = {
     contentText: text,
-    footerText: 'Nyarlathotep-Bot ⬩ Made By XÆ15 - T',
+    footerText: footer,
     headerType: 'EMPTY',
     buttons: [...buttons],
   };
