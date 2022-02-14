@@ -55,7 +55,7 @@ module.exports = {
         { buttonId: '#owner SMH', buttonText: { displayText: 'OWNER' }, type: 1 },
         { buttonId: '#stats SMH', buttonText: { displayText: 'STATUS' }, type: 1 }
       ]
-      wa.sendButtons(msg.from, str, buttons, { quoted: msg, contextInfo: { mentionedJid: [sender] }})
+      wa.sendButtons(msg.from, str, ' ', buttons, { quoted: msg, contextInfo: { mentionedJid: [sender] }})
     }
   },
 };
