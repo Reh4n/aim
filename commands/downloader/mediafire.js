@@ -12,7 +12,7 @@ module.exports = {
 			await wa.reply(from, JSON.stringify(res, null, 2), msg)
 			let mimetype = await mime.lookup(res.link)
 			await wa.custom(from, { url: res.link }, 'documentMessage', { quoted: msg, filename: res.title, mimetype })
-		}).catch(wa.reply)
+		}).catch(e => wa.reply(msg.from, String(e), msg))
 	}
 }
 
