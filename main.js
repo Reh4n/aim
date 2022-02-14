@@ -3,6 +3,7 @@ const wa = require('./core/helper');
 const { color } = require('./utils');
 const { sticker } = require("../../core/convert");
 const { buttonsParser } = require('./core/parser');
+const Baileys = require('@adiwajshing/baileys');
 const cron = require('./utils/cronjob');
 const fs = require('fs');
 const util = require('util');
@@ -74,6 +75,7 @@ ev.on('chat-update', async (msg) => {
 			case 'imageMessage':
 			case 'stickerMessage':
 			case 'documentMessage': {
+				if (!msg.key.fromMe) await Baileys.delay(1000)
 				if (!msg.message[type].url) await ev.updateMediaMessage(msg)
 				break
 			}
@@ -107,8 +109,6 @@ ev.on('chat-update', async (msg) => {
 		} else if (type === 'videoMessage' && !isCmd && !isGroup) {
 			let media = await ev.downloadMediaMessage(msg)
 			sticker(media, { isVideo: true, cmdType: 1 }).then(v => wa.sticker(from, v, { quoted: msg }))
-		} else if (type === 'groupInviteMessage' && !isGroup) {
-			wa.reply(owner[0], `https://chat.whatsapp.com/${msg.message[type].inviteCode}`, msg)
 		}
 		
 		if (/^>?> /.test(body)) {
