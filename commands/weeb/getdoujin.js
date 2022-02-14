@@ -7,7 +7,6 @@ const { compressImage } = require('@adiwajshing/baileys')
 module.exports = {
 	name: 'getdoujin',
 	aliases: ['getdojin'],
-	category: 'weebs',
 	use: 'Ex: !getdoujin 1 <reply chat bot>',
 	async execute(msg, wa, args) {
 		try {
