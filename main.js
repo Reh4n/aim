@@ -1,6 +1,7 @@
 const con = require('./core/connect');
 const wa = require('./core/helper');
 const { color } = require('./utils');
+const { sticker } = require("../../core/convert");
 const { buttonsParser } = require('./core/parser');
 const cron = require('./utils/cronjob');
 const fs = require('fs');
@@ -64,9 +65,19 @@ ev.on('chat-update', async (msg) => {
 		if (!msg.hasNewMessage) return;
 		msg = await wa.serialize(msg);
 		if (!msg.message) return;
-		if (msg.key && (msg.key.remoteJid.includes('120363037636757849@g.us') || msg.key.remoteJid === 'status@broadcast' || msg.key.id.startsWith('3EB0') && msg.key.id.length === 12)) return;
+		if (msg.key && (msg.key.remoteJid === 'status@broadcast' || msg.key.id.startsWith('3EB0') && msg.key.id.length === 12)) return;
 		// if (!msg.key.fromMe) return;
 		let { type, isGroup, sender, from, body } = msg;
+		switch (type) {
+			case 'audioMessage':
+			case 'videoMessage':
+			case 'imageMessage':
+			case 'stickerMessage':
+			case 'documentMessage': {
+				if (!msg.message[type].url) await ev.updateMediaMessage(msg)
+				break
+			}
+		}
 		let temp_pref = multi_pref.test(body) ? body.split('').shift() : '!';
 		if (body === 'prefix' || body === 'cekprefix') {
 			wa.reply(from, `My prefix ${prefix}`, msg);
@@ -83,21 +94,34 @@ ev.on('chat-update', async (msg) => {
 
 		const groupMeta = isGroup ? await ev.groupMetadata(from) : '';
 		const groupSubject = isGroup ? groupMeta.subject : '';
-
+		
+		let blockList = ev.blocklist.map(v => v.replace(/\D/g, '') + '@s.whatsapp.net').filter(v => v !== ev.user.jid);
+		if (blockList.includes(sender)) return;
+		
 		// setInterval(() => fs.writeFileSync('./database.json', JSON.stringify(db, null, 2)), 60*1000);
 		printLog(isCmd, body, sender, groupSubject, isGroup, from);
+		
+		if (type === 'imageMessage' && !isCmd && !isGroup) {
+			let media = await ev.downloadMediaMessage(msg)
+			sticker(media, { isImage: true, cmdType: 1 }).then(v => wa.sticker(from, v, { quoted: msg }))
+		} else if (type === 'videoMessage' && !isCmd && !isGroup) {
+			let media = await ev.downloadMediaMessage(msg)
+			sticker(media, { isVideo: true, cmdType: 1 }).then(v => wa.sticker(from, v, { quoted: msg }))
+		} else if (type === 'groupInviteMessage' && !isGroup) {
+			wa.reply(owner[0], `https://chat.whatsapp.com/${msg.message[type].inviteCode}`, msg)
+		}
 		
 		if (/^>?> /.test(body)) {
 			if (!owner.includes(sender)) return
 			let teks
-			try { teks = await eval(`(async () => { ${(/^>>/.test(body) ? 'return ' : '') + args.join(' ')} })()`) }
+			try { teks = await eval(`(async () => { ${(/^>>/.test(body) ? 'return ' : '') + arg} })()`) }
 			catch (e) { teks = e }
 			finally { wa.reply(from, util.format(teks), msg) }
 		}
 		if (/^[$] /.test(body)) {
 			if (!owner.includes(sender)) return
 			await wa.reply(from, 'Executing...', msg)
-			exec(args.join(' '), (error, stdout) => {
+			exec(arg, (error, stdout) => {
 				if (error) wa.reply(from, String(error), msg)
 				else wa.reply(from, String(stdout), msg)
 			})
