@@ -2,7 +2,6 @@ const { Whatsapp: ev } = require('../../core/connect')
 
 module.exports = {
   name: 'inspect',
-  category: 'misc',
   desc: 'Inspect link group Whatsapp.',
   async execute(msg, wa, args) {
     let linkRegex = /chat\.whatsapp\.com\/(?:invite\/)?([0-9A-Za-z]{20,24})/i
