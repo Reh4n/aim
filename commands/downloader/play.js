@@ -17,7 +17,7 @@ module.exports = {
 		const struct = {
 			imageMessage: (await ev.prepareMessageMedia({ url: s[0].thumbnails[0].url }, 'imageMessage')).imageMessage,
 			contentText: `📙 Title: ${s[0].title}\n📎 Url: ${s[0].url}\n🚀 Upload: ${s[0].uploadedAt}\n\nWant a video version? click button below, or you don\'t see it? type *!ytv youtube_url*\n\nAudio on progress....`,
-			footerText: 'Nyarlathotep-Bot ⬩ Made by Ripp',
+			footerText: ' ',
 			headerType: 'IMAGE',
 			buttons: [{
 				buttonText: { displayText: 'Video' }, buttonId: `#ytv ${s[0].url} SMH`, type: 1
