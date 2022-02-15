@@ -19,7 +19,7 @@ module.exports = {
         let { title, artists, album, genres, release_date } = res.metadata.music[0]
         let txt = `*RESULT FOUND*\n\n*• Title:* ${title}${artists ? `\n*• Artists:* ${artists.map(v => v.name).join(', ')}` : ''}${album ? `\n*• Album:* ${album.name}` : ''}${genres ? `\n*• Genres:* ${genres.map(v => v.name).join(', ')}` : ''}\n*• Release Date:* ${release_date}`
         wa.reply(msg.from, txt.trim(), msg)
-      } else wa.reply(msg.from, 'ID:\n\nSilahkan kirim/reply audio/video/dokumen yang ingin dicari judul lagunya.\n\nEN:\n\nPlease send/reply the audio/video/document you want to identify the song.', msg)
+      } else wa.reply(msg.from, 'ID:\nSilahkan kirim/reply audio/video/dokumen yang ingin dicari judul lagunya.\n\nEN:\nPlease send/reply the audio/video/document you want to identify the song.', msg)
     } catch (e) {
       console.log(e)
       wa.reply(msg.from, String(e), msg)
