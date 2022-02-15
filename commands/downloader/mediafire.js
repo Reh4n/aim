@@ -18,7 +18,7 @@ module.exports = {
 
 function mediafireDl(url) {
 	return new Promise((res, rej) => {
-		if (!/https?:\/\//.test(url) || !url.includes('mediafire')) return reject('Invalid url!')
+		if (!/https?:\/\//.test(url) && !url.includes('mediafire')) return rej('Invalid url!')
 		axios(url).then(c => {
 			let $ = cheerio.load(c.data)
 			let title = $('div.dl-btn-label').attr('title')
