@@ -32,7 +32,7 @@ module.exports = {
           if (!args[1]) return wa.reply(from, 'Input code', msg)
           await wa.reply(from, 'Loading...', msg)
           let { title, language, cover, details, pages } = await getDoujin(args[1].replace(/\D/g, ''), { simplified: true })
-          if (pages.length >= 200) return wa.reply(from, `Page nya kebanyakan, download sendiri https://hiken.xyz/g/${args[0]}`, msg)
+          if (pages.length >= 200) return wa.reply(from, `Page nya kebanyakan, download sendiri https://hiken.xyz/g/${args[1].replace(/\D/g, '')}`, msg)
           pages = await toPDF(pages)
           let thumbnail = await fetchBuffer(cover)
           await ev.sendMessage(from, pages, 'documentMessage', { quoted: msg, filename: `${title.default}.pdf`, mimetype: 'application/pdf', thumbnail }).then(c => {
