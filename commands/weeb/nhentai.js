@@ -31,7 +31,7 @@ module.exports = {
         case 'pdf': {
           if (!args[1]) return wa.reply(from, 'Input code', msg)
           await wa.reply(from, 'Loading...', msg)
-          let { title, language, cover, details, pages } = await getDoujin(args[1].replace(/\D/g, ''))
+          let { title, language, cover, details, pages } = await getDoujin(args[1].replace(/\D/g, ''), { simplified: true })
           if (pages.length >= 200) return wa.reply(from, `Page nya kebanyakan, download sendiri https://hiken.xyz/g/${args[0]}`, msg)
           pages = await toPDF(pages)
           let thumbnail = await fetchBuffer(cover)
@@ -53,7 +53,7 @@ module.exports = {
         default:
         if (args[0] && /^\d+$/.test(args[0])) {
           await wa.reply(from, 'Loading...', msg)
-          let { title, language, cover, details, pages } = await getDoujin(args[0])
+          let { title, language, cover, details, pages } = await getDoujin(args[0], { simplified: true })
           if (pages.length >= 200) return wa.reply(from, `Page nya kebanyakan, download sendiri https://hiken.xyz/g/${args[0]}`, msg)
           pages = await toPDF(pages)
           let thumbnail = await fetchBuffer(cover)
