@@ -6,7 +6,7 @@ module.exports = {
   async execute(msg, wa, args) {
     if (!args.join(' ')) return wa.reply(msg.from, 'Query Needed', msg)
     axios.get(`https://api.npms.io/v2/search?q=${args.join(' ')}`).then(({ data }) => {
-      let txt = data.results.map(({ package: pkg }) => `*${pkg.name}* (v${pkg.version})\n_${pkg.links.npm}_\n_${pkg.description}$_`).join('\n\n')
+      let txt = data.results.map(({ package: pkg }) => `*${pkg.name}* (v${pkg.version})\n_${pkg.links.npm}_\n_${pkg.description}_`).join('\n\n')
       wa.reply(msg.from, txt, msg)
     }).catch(e => wa.reply(msg.from, String(e), msg))
   }
