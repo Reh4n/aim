@@ -3,7 +3,7 @@ const { Whatsapp: ev } = require('../../core/connect')
 
 module.exports = {
   name: 'clearchat',
-  aliases: ['clear'],
+  aliases: ['clear', 'deletechat'],
   async execute(msg, wa, args) {
     const { from, body, sender } = msg
     if (!owner.includes(sender)) return
