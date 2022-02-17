@@ -1,5 +1,7 @@
-const ev = require('../../core/connect').Whatsapp;
-const os = require('os');
+const os = require('os')
+const { sizeFormatter } = require('human-readable')
+const { Whatsapp: ev } = require('../../core/connect')
+const formatSize = sizeFormatter({ std: 'JEDEC', decimalPlaces: '2', keepTrailingZeroes: false, render: (literal, symbol) => `${literal} ${symbol}B` })
 
 module.exports = {
     name: 'stats',
@@ -12,7 +14,7 @@ module.exports = {
         const group = chats.filter(v => !v.read_only && v.jid.endsWith('@g.us')).map(v => v.jid)
         let text = ''
         text += `HOST:\n- Arch: ${os.arch()}\n- CPU: ${os.cpus()[0].model}${os.cpus().length > 1 ? (' (' + os.cpus().length + 'x)') : ''}\n- Release: ${os.release()}\n- Version: ${os.version()}\n`
-        text += `- Memory: ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB / ${Math.round(os.totalmem / 1024 / 1024).toFixed(2)} MB\n`
+        text += `- Memory: ${formatSize(os.totalmem() - os.freemem())} / ${formatSize(os.totalmem())}\n`
         text += `- Platform: ${os.platform()}\n- Hostname: ${os.hostname()}\n\nBOT:\n- Battery: ${ev['battery']['value'] == null ? 100 : ev['battery']['value']}% ${ev['battery']['charge'] ? '🔌Charging....' : '✅Stand by....'}\n`
         text += `- Chats:\n  - Personal: ${personal.length}\n  - Groups: ${group.length}\n- Runtime: ${clockString(process.uptime())}`;
         wa.reply(msg.from, text, msg);

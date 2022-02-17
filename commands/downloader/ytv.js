@@ -1,4 +1,4 @@
-const axios = require('axios')
+const fetch = require('node-fetch')
 const lang = require('../other/text.json')
 const { ytv } = require('../../utils/youtube')
 const { fetchText, textParse } = require('../../utils')
@@ -45,7 +45,7 @@ module.exports = {
 
 async function getBuffer(url, opt = {}) {
 	if (opt.skipSSL) process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
-	let res = await axios(url, { responseType: 'arraybuffer' })
-	if (res.status !== 200) throw res.statusText
-	return res.data
+	let res = await fetch(url, opt)
+	if (res.status !== 200) throw await res.text()
+	return await res.buffer()
 }
