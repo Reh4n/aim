@@ -1,4 +1,3 @@
-/*
 const axios = require('axios')
 const cheerio = require('cheerio')
 const { toPDF } = require('../../utils')
@@ -65,4 +64,3 @@ function downloadKomik(url) {
 		}).catch(reject)
 	})
 }
-*/
