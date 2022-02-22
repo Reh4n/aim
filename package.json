@@ -11,7 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "@adiwajshing/baileys": "^3.5.3",
-    "@bochilteam/scraper": "^0.0.5",
+    "@bochilteam/scraper": "^0.0.8",
     "@discordjs/collection": "^0.3.2",
     "acrcloud": "*",
     "axios": "^0.24.0",
