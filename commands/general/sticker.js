@@ -21,41 +21,30 @@ module.exports = {
     if ((isMedia && !msg.message.videoMessage) || isQImg) {
       const encmed = isQImg ? quoted : msg;
       const media = await ev.downloadMediaMessage(encmed, "buffer");
-      sticker(media, { isImage: true, cmdType: "1" }).then((r) => {
+      sticker(media, { isImage: true, withPackInfo: true, cmdType: "1", packInfo: { packname: `Made by ${ev.user.name}`, author: '' }}).then((r) => {
         wa.sticker(from, r, { quoted: msg });
       }).catch(() => {
-        wa.reply(from, "Ada yang Error.");
+        wa.reply(from, "Ada yang Error.", msg);
       });
-    } else if (
-      (isMedia && msg.message.videoMessage.seconds <= 15 && msg.message.videoMessage.fileLength < 2 << 20) ||
-      (isQVid && quoted.message.videoMessage.seconds <= 15 && quoted.message.videoMessage.fileLength < 2 << 20)
-    ) {
+    } else if ((isMedia && msg.message.videoMessage.fileLength < 2 << 20) || (isQVid && quoted.message.videoMessage.fileLength < 2 << 20)) {
       const encmed = isQVid ? quoted : msg;
       const media = await ev.downloadMediaMessage(encmed, "buffer");
-      sticker(media, { isVideo: true, cmdType: "1" }).then((r) => {
+      sticker(media, { isVideo: true, withPackInfo: true, cmdType: "1", packInfo: { packname: `Made by ${ev.user.name}`, author: '' }}).then((r) => {
         wa.sticker(from, r, { quoted: msg });
       }).catch(() => {
-        wa.reply(from, "Ada yang Error.");
+        wa.reply(from, "Ada yang Error.", msg);
       });
-    } else if (
-      isQDoc &&
-      (/image/.test(quoted.message.documentMessage.mimetype) ||
-        (/video/.test(quoted.message.documentMessage.mimetype) && quoted.message.documentMessage.fileLength < 2 << 20))
-    ) {
+    } else if (isQDoc && (/image/.test(quoted.message.documentMessage.mimetype) || (/video/.test(quoted.message.documentMessage.mimetype) && quoted.message.documentMessage.fileLength < 2 << 20))) {
       let ext = /image/.test(quoted.message.documentMessage.mimetype) ? { isImage: true } : /video/.test(quoted.message.documentMessage.mimetype) ? { isVideo: true } : null;
       if (ext === null) return wa.reply(from, `Sepertinya tipe dokumen ini bukan berupa jpg atau mp4`, msg);
       const media = await ev.downloadMediaMessage(quoted, "buffer");
-      sticker(media, {...ext, cmdType: "1"}).then((r) => {
+      sticker(media, { ...ext, withPackInfo: true, cmdType: "1", packInfo: { packname: `Made by ${ev.user.name}`, author: '' }}).then((r) => {
         wa.sticker(from, r, { quoted: msg });
       }).catch(() => {
-        wa.reply(from, "Ada yang Error.");
+        wa.reply(from, "Ada yang Error.", msg);
       });
     } else {
-      wa.reply(
-        from,
-        `IND:\n${lang.indo.stick}\n\nEN:\n${lang.eng.stick}`,
-        msg,
-      );
+      wa.reply(from, `IND:\n${lang.indo.stick}\n\nEN:\n${lang.eng.stick}`, msg);
     }
   },
 };
