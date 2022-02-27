@@ -1,6 +1,6 @@
 const con = require('./core/connect');
 const wa = require('./core/helper');
-const { color } = require('./utils');
+const { color } = require('../../utils');
 const { sticker } = require("./core/convert");
 const { buttonsParser } = require('./core/parser');
 const Baileys = require('@adiwajshing/baileys');
