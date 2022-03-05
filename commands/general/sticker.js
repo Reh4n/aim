@@ -29,7 +29,7 @@ module.exports = {
     } else if ((isMedia && msg.message.videoMessage.fileLength < 2 << 20) || (isQVid && quoted.message.videoMessage.fileLength < 2 << 20)) {
       const encmed = isQVid ? quoted : msg;
       const media = await ev.downloadMediaMessage(encmed, "buffer");
-      sticker(media, { isVideo: true, withPackInfo: true, cmdType: "1", packInfo: { packname: `Made by ${ev.user.name}`, author: '' }}).then((r) => {
+      sticker(media, { isVideo: true, withPackInfo: true, cmdType: "1", packInfo: { packname: `Created by LitRHap`, author: 'Afh Iyh' }}).then((r) => {
         wa.sticker(from, r, { quoted: msg });
       }).catch(() => {
         wa.reply(from, "Ada yang Error.", msg);
