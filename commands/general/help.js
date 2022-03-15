@@ -42,7 +42,7 @@ module.exports = {
           categories[info.category].push(info);
         }
       }
-      let str = '\t'.repeat(16) + "\`\`\`PUBLIC BOT\`\`\`\n\n"
+      let str = '\t'.repeat(16) + "LitRHap"
       +`Hello, @${sender.split("@")[0]}\n*Here My Command List*\n\n`;
       const keys = Object.keys(categories);
       for (const key of keys) {
