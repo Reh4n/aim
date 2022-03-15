@@ -4,7 +4,7 @@ const ev = con.Whatsapp;
 module.exports = {
   name: 'nowa',
   aliases: ['dork'],
-  category: 'Misc',
+  category: 'misc',
   desc: 'Dork number',
   use: '<num>',
   async execute(msg, wa, args) {
