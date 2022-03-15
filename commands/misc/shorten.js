@@ -3,7 +3,7 @@ const axios = require('axios')
 module.exports = {
      name: 'shortlink',
      aliases: ['short','shorturl'],
-     category: 'Misc',
+     category: 'misc',
      desc: 'Shorten url',
      use: '<url>\nEx: !shortlink https://justnino.xyz',
      async execute(msg, wa, args) {
