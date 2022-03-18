@@ -64,8 +64,8 @@ module.exports = {
       }
       str += `send ${prefix}help followed by a command name to get detail of command, e.g. ${prefix}help sticker`;
       let buttons = [
-        { buttonId: '#owner NPC', buttonText: { displayText: 'Owner' }, type: 1 },
-        { buttonId: '#stats NPC', buttonText: { displayText: 'Status' }, type: 1 }
+        { buttonId: '#owner SMH', buttonText: { displayText: 'Owner' }, type: 1 },
+        { buttonId: '#stats SMH', buttonText: { displayText: 'Status' }, type: 1 }
       ]
       wa.sendButtons(msg.from, str, ' ', buttons, { quoted: msg, contextInfo: { mentionedJid: [sender] }})
     }
