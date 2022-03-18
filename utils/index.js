@@ -4,6 +4,7 @@ const { default: axios } = require("axios");
 const pdfkit = require('pdfkit');
 const fs = require('fs');
 const moment = require('moment-timezone');
+const { sizeFormatter } = require("human-readable");
 const { fromBuffer } = require('file-type');
 const webp = require('webp-converter');
 const { join } = require('path');
@@ -30,6 +31,13 @@ const fetchText = async function (url) {
     return response;
   }
 };
+
+const formatSize = sizeFormatter({
+  std: "JEDEC",
+  decimalPlaces: "2",
+  keepTrailingZeroes: false,
+  render: (literal, symbol) => `${literal} ${symbol}B`
+})
 
 const fetchBuffer = function (url) {
   return new Promise(async (resolve, reject) => {
@@ -189,6 +197,7 @@ module.exports = {
   getRandom,
   fetchText,
   fetchJson,
+  formatSize,
   fetchBuffer,
   calculatePing,
   textParse,
