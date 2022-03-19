@@ -1,5 +1,5 @@
 const fetch = require('node-fetch')
-const { formatSize } = require('../utils/index')
+const { formatSize } = require('../../utils/index')
 
 module.exports = {
   name: 'gdrive',
