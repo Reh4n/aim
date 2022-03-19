@@ -8,7 +8,7 @@ const ev = con.Whatsapp;
 module.exports = {
   name: 'help',
   aliases: ['h', 'cmd', 'menu'],
-  category: 'General',
+  category: 'general',
   desc: 'show help message.',
   async execute(msg, wa, args) {
     if (args[0]) {
