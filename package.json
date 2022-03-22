@@ -14,6 +14,7 @@
     "@bochilteam/scraper": "^0.0.81",
     "@discordjs/collection": "^0.3.2",
     "@ibaraki-douji/pixivts": "*",
+    "@vitalets/google-translate-api": "*",
     "acrcloud": "*",
     "axios": "^0.24.0",
     "chalk": "^4.1.2",
