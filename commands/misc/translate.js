@@ -9,7 +9,7 @@ module.exports = {
     const { from, quoted } = msg
     try {
       if (quoted) {
-        let text = quoted.message[Object.keys(quoted.message)[0]]?.caption || quoted.message.extendedTextMessage.text || quoted.message.conversation
+        let text = quoted.message[Object.keys(quoted.message)[0]]?.caption || quoted.message?.extendedTextMessage?.text || quoted.message.conversation
         let res = await translate(text, args[0])
         await wa.reply(from, res, msg)
       } else if (args.length >= 2) {
