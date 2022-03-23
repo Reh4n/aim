@@ -3,7 +3,7 @@ const { formatSize } = require('../../utils/index')
 
 module.exports = {
   name: 'gdrive',
-  category: 'downloader',
+  category: 'Downloader',
   async execute(msg, wa, args) {
     try {
       if (!args[0]) return wa.reply(msg.from, 'Input URL', msg)
