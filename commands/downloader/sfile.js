@@ -4,7 +4,7 @@ const fetch = require("node-fetch");
 module.exports = {
   name: "sfile",
   aliases: ["sfiledl","sfilemobi"],
-  category: "downloader",
+  category: "Downloader",
   desc: "Download media from sfilemobi",
   use: "<url>\n!sfile https://sfile.mobi/1pWt7I8yOMG7",
   async execute(msg, wa, args) {
