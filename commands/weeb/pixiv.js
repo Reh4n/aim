@@ -4,6 +4,7 @@ const pixiv = new Pixiv()
 
 module.exports = {
   name: 'pixiv',
+  category: 'weebs',
   async execute(msg, wa, args) {
     try {
       if (!args[0]) return wa.reply(msg.from, 'Input Query / Pixiv Url', msg)
