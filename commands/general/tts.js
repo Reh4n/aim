@@ -7,11 +7,11 @@ const list = [
 
 module.exports = {
   name: "tts",
-  category: "general",
+  category: "General",
   use: "spy|anjimeh luwh",
   async execute(msg, wa, args) {
     let [chara, text] = args.join` `.split`|`
-    if (!(chara && text)) return wa.reply("Ex: !tts fluttershy|hello world")
+    if (!(chara && text)) return wa.reply(msg.from, `The following is a list of available characters\n\n${list.join('\n')}\n\nEx: !tts fluttershy|hello world`, msg)
     let res = await tts(chara, text)
     await wa.custom(msg.from, { url: res }, 'audioMessage', { quoted: msg, ptt: true, mimetype: 'audio/mpeg' })
   }
