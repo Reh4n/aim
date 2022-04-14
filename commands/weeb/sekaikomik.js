@@ -8,7 +8,7 @@ const Base_URL = "https://sekaikomik.live";
 module.exports = {
   name: "komik",
   aliases: ["manga"],
-  category: "weeb",
+  category: "weebs",
   desc: "Download, search, popular, and get Latest komik from sekaikomik.live",
   use: "[options] query|url\n\n- *Options* -\n\n1. pdf\n2. search\n\nEx: !komik pdf https://komikcast.com/chapter/drawing-saikyou-mangaka-wa-oekaki-skill-de-isekai-musou-suru-chapter-01-2-bahasa-indonesia/",
   async execute(msg, wa, args) {
