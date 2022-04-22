@@ -7,7 +7,7 @@ const list = [
 
 module.exports = {
   name: "tts",
-  category: "General",
+  category: "general",
   use: "spy|anjimeh luwh",
   async execute(msg, wa, args) {
     let [chara, text] = args.join` `.split`|`
