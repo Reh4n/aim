@@ -5,7 +5,7 @@ const ev = require('../../core/connect').Whatsapp
 
 module.exports = {
 	name: 'mynimekudl',
-	category: 'weebs',
+	category: '',
 	desc: 'Download anime/manga from web mynimeku.',
 	use: '[options] url\n\n- *Options* -\n\n1. anime\n2. manga\n\nEx: !mynimeku anime url',
 	async execute(msg, wa, args) {
