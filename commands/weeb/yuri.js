@@ -2,7 +2,7 @@ const Booru = require('booru')
 
 module.exports = {
   name: 'yuri',
-  category: 'weebs',
+  category: '',
   desc: 'Get random yuri image',
   async execute(msg, wa) {
     let list = ['sb', 'kn', 'kc'],
