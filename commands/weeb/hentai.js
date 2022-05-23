@@ -2,7 +2,7 @@ const { fetchJson } = require('../../utils')
 
 module.exports = {
   name: 'hentai',
-  category: 'weebs',
+  category: '',
   desc: 'Random anime hentai.',
   async execute(msg, wa) {
     const { url } = await fetchJson('https://hmtai.herokuapp.com/nsfw/hentai')
